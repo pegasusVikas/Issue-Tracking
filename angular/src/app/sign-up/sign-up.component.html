@@ -1,0 +1,27 @@
+<form>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input ngModel name="email" id="email" type="text" class="form-control" #email="ngModel" (change)="log(email)" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}">
+        <div class="alert alert-danger" *ngIf="email.errors?.pattern"> Invalid!</div>
+    </div>
+    <div class="form-group">
+        <label for="userName">Username</label>
+        <input ngModel name="userName" id="userName" type="text" class="form-control">
+        </div>
+    <div class="form-group">
+        <label for="mobileNumber">Mobile Number</label>
+        <input ngModel name="mobileNumber" id="mobileNumber" type="text" class="form-control" #mobileNumber="ngModel" pattern="\d{10}">
+        <div class="alert alert-danger" *ngIf="mobileNumber.errors?.pattern"> Invalid!</div>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input ngModel name="password" id="password" type="text" class="form-control" #password="ngModel">
+    </div>
+    <div class="form-group">
+        <label for="cpassword">Confirm Password</label>
+        <input ngModel name="cpassword" id="cpassword" type="text" class="form-control" #cpassword="ngModel" pattern="{{password.value}}">
+        <div class="alert alert-danger" *ngIf="cpassword.errors?.pattern"> Invalid!</div>
+    </div>
+    
+     <button class="btn btn-primary">Register</button>
+</form>
