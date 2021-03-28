@@ -5,5 +5,5 @@
 1. The instructions are defined in the word document inside the repository.
 2. You are advised to strictly follow the instructions given in the word document.
 
-Happy coding Neos:thumbsup:
+Happie coding Neos:thumbsup:
 
