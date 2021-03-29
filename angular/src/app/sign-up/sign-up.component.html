@@ -1,37 +1,40 @@
-<header class="col-12 mb-0">
-    <h2 class="p-0 mb-0 bg-primary text-white">Issue Tracker</h2>
-</header>
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-12 col-sm-6 col-md-3">
-            <form class="form-container">
-                <div class="justify-content-center"><h2>Sign-up</h2></div>
-                 <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    <input ngModel name="email" id="email" type="text" class="form-control" #email="ngModel"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}">
-                    <div class="alert-danger" *ngIf="email.errors?.pattern"> Invalid Email!</div>
-                </div>
-                <div class="form-group">
-                    <label for="userName" class="form-label">Username</label>
-                    <input ngModel name="userName" id="userName" type="text" class="form-control">
-                    </div>
-                <div class="form-group">
-                    <label for="mobileNumber" class="form-label">Mobile Number</label>
-                    <input ngModel name="mobileNumber" id="mobileNumber" type="text" class="form-control" #mobileNumber="ngModel" pattern="\d{10}">
-                    <div class="alert-danger" *ngIf="mobileNumber.errors?.pattern"> Invalid Mobile Number!</div>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="form-label">Password</label>
-                    <input ngModel name="password" id="password" type="password" class="form-control" #password="ngModel">
-                </div>
-                <div class="form-group">
-                    <label for="cpassword" class="form-label">Confirm Password</label>
-                    <input ngModel name="cpassword" id="cpassword" type="password" class="form-control" #cpassword="ngModel" pattern="{{password.value}}">
-                    <div class="alert-danger" *ngIf="cpassword.errors?.pattern"> Passwords doesnot match!</div>
-                </div>
-                 <button class="btn btn-primary btn-block">Submit</button>
-            </form>
 
+    <div class="container">
+        <div>
+        <div class="circle"></div>
+        
         </div>
-    </div>
-</div>
+       <div class="forms-container">
+         <div class="signin-signup">
+             <!--  sending paramters and  form.reset()-->
+           <form #form action="#" (submit)="onSubmit(email.value,username.value,phone.value,password1.value,password2.value);form.reset();" class="sign-in-form" id="sign-up">
+             <h2 class="title">Sign up</h2>
+             <div class="input-field">
+                 <i class="flex"><mat-icon class="font">email</mat-icon></i>
+               <input #email type="text" placeholder="Email" />
+             </div>
+             <div class="input-field">
+                <i class="flex"><mat-icon class="font">person</mat-icon></i>
+              <input #username type="text" placeholder="Username" />
+            </div>
+            <div class="input-field">
+                <i class="flex"><mat-icon class="font">phone</mat-icon></i>
+              <input #phone type="text" placeholder="Phone" />
+            </div>
+             <div class="input-field">
+                 <i class="flex"><mat-icon class="font">lock</mat-icon></i>
+               <input #password1 type="password" placeholder="Password" />
+             </div>
+             <div class="input-field">
+                <i class="flex"><mat-icon class="font">lock</mat-icon></i>
+              <input #password2 type="password" placeholder="Confirm Password" />
+            </div>
+             <input type="submit" value="Login" class="btn solid" />
+           </form>
+           <div *ngIf="hasErr" class="alert alert-danger" role="alert">
+            This is a danger alert—check it out!
+          </div>
+         </div>
+       </div>
+     </div>
+ 
