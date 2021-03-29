@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  errMsg:String="Hello"
-  hasErr:Boolean=true
+  errMsg:String=""
+  hasErr:Boolean=false
   constructor() { }
 
   ngOnInit(): void {
@@ -30,7 +30,7 @@ export class SignUpComponent implements OnInit {
   showError(error:String){
     this.errMsg=error
     this.hasErr=true
-    setTimeout(()=>{this.hasErr=false},2000)
+    setTimeout(()=>{this.hasErr=false},4000)
   }
   log(x: any)
   {

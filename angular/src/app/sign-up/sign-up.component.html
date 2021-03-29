@@ -1,5 +1,5 @@
 
-    <div class="container">
+    <div >
         <div>
         <div class="circle"></div>
         
@@ -7,7 +7,7 @@
        <div class="forms-container">
          <div class="signin-signup">
              <!--  sending paramters and  form.reset()-->
-           <form #form action="#" (submit)="onSubmit(email.value,username.value,phone.value,password1.value,password2.value);form.reset();" class="sign-in-form" id="sign-up">
+           <form #form action="#" (submit)="onSubmit(email.value,username.value,phone.value,password1.value,password2.value);" class="sign-in-form" id="sign-up">
              <h2 class="title">Sign up</h2>
              <div class="input-field">
                  <i class="flex"><mat-icon class="font">email</mat-icon></i>
@@ -32,9 +32,11 @@
              <input type="submit" value="Login" class="btn solid" />
            </form>
            <div *ngIf="hasErr" class="alert alert-danger" role="alert">
-            This is a danger alert—check it out!
+            <div class="flex" style="margin: 5px;"> <mat-icon class="alert" >error_outline</mat-icon><span class="error">{{errMsg}}</span></div>
           </div>
          </div>
+
        </div>
      </div>
+     
  
