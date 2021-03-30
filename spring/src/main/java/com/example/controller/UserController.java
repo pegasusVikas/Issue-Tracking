@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +20,25 @@ public class UserController {
 	@PostMapping(value="/addUser")
 	public void userSave(@RequestBody UserModel data)
 	{
-		repo.save(data);
+		if((repo.checkUserExists(data.getEmail()))==null)
+			repo.save(data);
+		else
+			System.out.println("User already exists");
 		return ;
+	}
+	
+	public List<UserModel> getUsers()
+	{
+		return repo.findAll();
+	}
+	
+	public UserModel userDataById(String id)
+	{
+		return repo.getUserById(id);
+	}
+	
+	public void userDelete(String id)
+	{
+		repo.deleteById(id);
 	}
 }
