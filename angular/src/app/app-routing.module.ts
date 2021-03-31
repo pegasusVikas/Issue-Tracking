@@ -6,7 +6,8 @@ import {DeveloperHomeComponent} from './developer/developer-home/developer-home.
 const routes: Routes =[
   {path:"signin",component:SignInComponent},
   {path:"signup",component:SignUpComponent},
-  {path:"developer/home",component:DeveloperHomeComponent}
+  {path:"developer/home",component:DeveloperHomeComponent},
+  
 ];
 
 @NgModule({
