@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon'
 import {HttpClientModule} from '@angular/common/http'
 
+import {DeveloperModule} from './developer/developer.module'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -26,7 +27,8 @@ import { UserComponent } from './user/user.component';
     FormsModule,
     BrowserAnimationsModule,
     MatIconModule,
-    HttpClientModule
+    HttpClientModule,
+    DeveloperModule
   ],
   providers: [],
   bootstrap: [AppComponent]

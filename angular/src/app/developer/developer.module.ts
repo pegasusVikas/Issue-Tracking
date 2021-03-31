@@ -9,6 +9,8 @@ import { DeveloperTableComponent } from './developer-table/developer-table.compo
   declarations: [DeveloperHomeComponent, DeveloperTableComponent],
   imports: [
     CommonModule
-  ]
+  ],
+  exports:[DeveloperTableComponent,DeveloperHomeComponent]
+
 })
 export class DeveloperModule { }
