@@ -7,7 +7,7 @@ import com.example.model.IssueModel;
 
 public interface IssueRepository extends JpaRepository<IssueModel, String>{
 	
-	@Query("select issueid from issues order by issueid desc limit 1")
+	@Query(value="select issueid from issues order by issueid desc limit 1",nativeQuery=true)
 	public String genId();
 
 }
