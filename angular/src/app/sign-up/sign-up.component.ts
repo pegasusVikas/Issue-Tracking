@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'sign-up',
@@ -6,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
+  loginURL="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io/addUser";
   errMsg:String=""
   hasErr:Boolean=false
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -23,9 +25,26 @@ export class SignUpComponent implements OnInit {
     this.showError("Enter a valid Mobile Number");
     else if(password1=="")
     this.showError("password cant be empty");
-
+    else{
     //send form to backend
-
+    this.http.post(this.loginURL,{
+      email:email,
+      password:password1,
+      username:username,
+      mobileno:phone,
+      active:1,
+      role:"user"
+    }).toPromise().then((res:any)=>{
+      if(res)
+      {
+        //sucess
+        console.log("registered");
+      }
+      else{
+        this.showError("Can't SignUp.User already exists");
+      }
+    })
+  }
   }
   showError(error:String){
     this.errMsg=error

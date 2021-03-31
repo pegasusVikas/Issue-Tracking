@@ -19,12 +19,21 @@ export class SignInComponent implements OnInit {
     this.showError("Enter a Valid Email");
     else if(password=="")
     this.showError("password cant be empty");
-
+    else{
     //send form to backend
     this.http.post(this.loginURL,{
       email:email,
       password:password
-    }).toPromise().then((res)=>console.log(res))
+    }).toPromise().then((res)=>{
+      if(res)
+      {
+        //sucess
+      }
+      else{
+        this.showError("Invalid Credentials!");
+      }
+    })
+  }
     
   }
   showError(error:String){
