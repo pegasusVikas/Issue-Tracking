@@ -1,24 +1,33 @@
 
-    <div class="container">
-       <div>
-       <div class="circle"></div>
-       <div class="circle-content"></div>
-       
-       </div>
-      <div class="forms-container">
-        <div class="signin-signup">
-          <form action="#" class="sign-in-form">
-            <h2 class="title">Sign in</h2>
-            <div class="input-field">
-                <i class="flex"><mat-icon class="font">person</mat-icon></i>
-              <input type="text" placeholder="Username" />
-            </div>
-            <div class="input-field">
-                <i class="flex"><mat-icon class="font">lock</mat-icon></i>
-              <input type="password" placeholder="Password" />
-            </div>
-            <input type="submit" value="Login" class="btn solid" />
-          </form>
-        </div>
+    <div >
+      <div>
+      <div class="circle"></div>
+      
       </div>
-    </div>
+     <div class="forms-container">
+       <div class="signin-signup">
+           <!--  sending paramters and  form.reset()-->
+         <form #form action="#" (submit)="onSubmit(email.value,password.value)" class="sign-in-form" id="sign-up">
+           <h2 class="title">Sign In</h2>
+           <div class="input-field">
+               <i class="flex"><mat-icon class="font">email</mat-icon></i>
+             <input #email type="text" placeholder="Email" />
+           </div>
+           
+           <div class="input-field">
+               <i class="flex"><mat-icon class="font">lock</mat-icon></i>
+             <input #password type="password" placeholder="Password" />
+           </div>
+          
+           <input type="submit" value="Login" class="btn solid" />
+         </form>
+         <div *ngIf="hasErr" class="alert alert-danger" role="alert">
+          <div class="flex" style="margin: 5px;">
+            <mat-icon class="alert">error_outline</mat-icon><span class="error">{{errMsg}}</span>
+          </div>
+        </div>
+       </div>
+      
+     </div>
+   </div>
+   

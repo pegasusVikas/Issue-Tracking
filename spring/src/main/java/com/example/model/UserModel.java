@@ -9,6 +9,13 @@ import javax.persistence.Table;
 @Table(name="users")
 public class UserModel {
 	
+	@Override
+	public String toString() {
+		return "UserModel [email=" + email + ", password=" + password + ", username=" + username + ", mobileno="
+				+ mobileno + ", active=" + active + ", role=" + role + "]";
+	}
+	
+	@Id
 	@Column(name="email")
 	private String email;
 	
@@ -18,7 +25,6 @@ public class UserModel {
 	@Column(name="username")
 	private String username;
 	
-	@Id
 	@Column(name="mobileno")
 	private String mobileno;
 	
