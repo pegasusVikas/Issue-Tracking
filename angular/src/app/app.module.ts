@@ -12,6 +12,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { UserComponent } from './user/user.component';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { UserComponent } from './user/user.component';
     BrowserAnimationsModule,
     MatIconModule,
     HttpClientModule,
-    DeveloperModule
+    DeveloperModule,
+    AdminModule
   ],
   providers: [],
   bootstrap: [AppComponent]

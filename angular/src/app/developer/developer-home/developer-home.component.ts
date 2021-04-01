@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./developer-home.component.css']
 })
 export class DeveloperHomeComponent implements OnInit {
-
+  
   constructor() { }
 
   ngOnInit(): void {
