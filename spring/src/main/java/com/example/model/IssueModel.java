@@ -1,7 +1,5 @@
 package com.example.model;
 
-
-
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -101,6 +99,5 @@ public class IssueModel {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
 	
 }
