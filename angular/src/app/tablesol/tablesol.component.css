@@ -93,7 +93,7 @@ a
 #one:checked ~  #one-panel,
 #two:checked ~  #two-panel
 {
-    display: block;
+    display: table;
 } 
 #one:checked ~ .table-title #one-tab,
 #two:checked ~ .table-title #two-tab{
@@ -101,12 +101,4 @@ a
   color:#000;
   border-radius: 4px;
   padding:0 4px 0 4px;
-}
-.user
-{
-    background-color: gainsboro;
-    border-radius: 30px;
-    text-align: center;
-    padding:0 20px;
-    margin:150px 15px 0 0;
 }
