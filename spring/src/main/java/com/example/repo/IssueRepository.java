@@ -14,11 +14,11 @@ public interface IssueRepository extends JpaRepository<IssueModel, String>{
 	public String genId();
 	
 	//get Issues of a particular User
-	@Query("from IssueModel where createdby=?1 order by uid desc")
+	@Query("from IssueModel where createdby=?1 order by issueid desc")
 	public List<IssueModel> getIssuesOfUser(String email);
 	
 	//get Issues Assigned to a particular Developer
-	@Query("from IssueModel where connectedby=?1 order by uid desc")
+	@Query("from IssueModel where connectedby=?1 order by issueid desc")
 	public List<IssueModel> getIssuesConnectedToDev(String devid);
 	
 	//get issue by it's id
@@ -42,7 +42,7 @@ public interface IssueRepository extends JpaRepository<IssueModel, String>{
 	public int getActiveCountDev(String devid);
 	
 	//get total No. of new issues
-	@Query(value="select count(*) from issues where connectedby like 'null' ",nativeQuery=true)
+	@Query(value="select count(*) from issues where connectedby IS NULL ",nativeQuery=true)
 	public int getNewCount();
 	
 	//get total No. of active issues
@@ -51,6 +51,14 @@ public interface IssueRepository extends JpaRepository<IssueModel, String>{
 	
 	//get total No. of solved issues
 	@Query(value="select count(*) from issues where status like 'solved' ",nativeQuery=true)
-	public int getSolvedCount();	
+	public int getSolvedCount();
+
+	//get count of Active issues for a developer
+	@Query(value="select count(*) from issues where connectedby=? and status like 'active' ",nativeQuery=true)
+	public int countActiveIssuesAssigned(String devid);
+
+	//get developers whose active issue count is greater than 5
+	@Query(value="select connectedby from issues where connectedby IS NOT NULL and status='active' group by connectedby having count(status)>=5 ",nativeQuery=true)
+	public List<String> unavailableDevelopers();
 	
 }

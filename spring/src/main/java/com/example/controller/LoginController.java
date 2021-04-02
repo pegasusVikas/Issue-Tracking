@@ -39,7 +39,7 @@ public class LoginController {
 	}
 	
 		//User sign up
-		@PostMapping(value="/signUp")
+		@PostMapping(value="/signup")
 		public String userSignup(@RequestBody UserModel data,HttpServletResponse response)
 		{
 			if(repo.getUserByEmail(data.getEmail())!=null)
@@ -54,7 +54,7 @@ public class LoginController {
 			{
 				String s=repo.genId();
 				if(s==null)
-					data.setId("#1000000");
+					data.setId("1000000");
 				else
 					data.setId(idGen(s,1));
 				data.setRole("user");

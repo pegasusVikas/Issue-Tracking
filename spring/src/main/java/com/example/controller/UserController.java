@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.model.IssueModel;
 import com.example.model.UserModel;
-
+import com.example.repo.IssueRepository;
 import com.example.repo.UserRepository;
 
 @RestController
@@ -24,6 +25,9 @@ public class UserController {
 
 	@Autowired
 	UserRepository repo;
+	
+	@Autowired
+	IssueRepository issue_repo;
 	
 	@GetMapping(value="/admin/developers")
 	public List<UserModel> getUsers()
@@ -37,18 +41,28 @@ public class UserController {
 	}
 	
 	@PutMapping(value="/admin/updateDeveloper/{id}")
-	public boolean userEditSave(@PathVariable String id, @RequestBody UserModel data)
+	public String userEditSave(@PathVariable String id, @RequestBody UserModel data)
 	{
 		UserModel edit_user=repo.getUserById(id);
 		if(edit_user!=null)
 		{
-			edit_user.setUsername(data.getUsername());
-			edit_user.setMobilenumber(data.getMobilenumber());
-			edit_user.setPassword(data.getPassword());
-			repo.save(edit_user);
-			return true;
+			UserModel x=repo.getUserByEmail(data.getEmail());
+			UserModel y=repo.checkUserNameExists(data.getUsername());
+			
+			if(x!=null && !(x.getId().equals(id)))
+				return "Email already exists";
+			else if(y!=null && !(y.getId().equals(id)))
+				return "Username already taken";
+			else {
+				edit_user.setEmail(data.getEmail());
+				edit_user.setUsername(data.getUsername());
+				edit_user.setMobilenumber(data.getMobilenumber());
+				edit_user.setPassword(data.getPassword());
+				repo.save(edit_user);
+				return "Edit Successful";
+			}
 		}
-		return false;
+		return "";
 	}
 	
 	@PostMapping(value="/admin/addDevelopers")
@@ -60,7 +74,7 @@ public class UserController {
 		}
 		else if(repo.checkUserNameExists(data.getUsername())!=null)
 		{
-			return "Already existing developer";
+			return "Username already exists";
 		}
 		else
 		{
@@ -101,6 +115,17 @@ public class UserController {
 	@DeleteMapping(value="/admin/deleteDeveloper/{id}")
 	public void userDelete(@PathVariable String id)
 	{
+		List<IssueModel> ass_dev=issue_repo.getIssuesConnectedToDev(id);
+		if(ass_dev!=null)
+		{
+			for(IssueModel x:ass_dev)
+			{
+				if(x.getStatus().equals("active"))
+					x.setConnectedby(null);
+				else
+					x.setConnectedby(repo.getUserById(id).getUsername());
+			}
+		}
 		repo.deleteById(id);
 	}
 	

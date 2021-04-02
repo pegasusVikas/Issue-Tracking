@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,12 +119,28 @@ public class IssueController {
 		return ;
 	}
 	
+	//Display Available Developers to admin in order to map an Issue
+	@GetMapping(value="/availabledevs")
+	public List<UserModel> displayDev()
+	{
+		List<UserModel> devs=user_repo.getDevelopers();
+		List<String> lst=issue_repo.unavailableDevelopers();
+		if(lst!=null)
+		{
+			for(String s:lst)
+			{
+				devs.remove(user_repo.getUserById(s));
+			}
+		}
+		return devs;
+	}
+	
 	@PostMapping(value="/admin/mapIssue/{id}")
 	public boolean assignIssue(@PathVariable String id,@RequestBody AssignmentModel data)
 	{
-		data.setIssueid(id);
+		data.setIssueid("#"+id);
 		IssueModel issue=issue_repo.getIssueById(data.getIssueid());
-		if(issue!=null)
+		if((issue!=null) && (issue_repo.countActiveIssuesAssigned(data.getDevid())<5))
 		{
 			issue.setConnectedby(data.getDevid());
 			issue_repo.save(issue);
