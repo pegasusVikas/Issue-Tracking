@@ -1,19 +1,24 @@
 package com.example.repo;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.example.model.UserModel;
 
-public interface UserRepository extends JpaRepository<UserModel, String> {
+public interface UserRepository extends JpaRepository<UserModel, Integer>{
+	
+	//getDevelopers
+	@Query("from UserModel where role='developer'")
+	public List<UserModel> getDevelopers();
 
-	@Query("from UserModel where email=?1 and password=?2")		//login
-	public UserModel getUser(String email,String password);
+	//get user details by id
+	@Query("from UserModel where uid=?1")
+	public UserModel getUserById(int uid);
 	
-	
-	@Query("select email from UserModel where email=?1")		//email check while sign up
-	public String checkUserExists(String email);
-	
+	//get user by email
 	@Query("from UserModel where email=?1")
-	public UserModel getUserById(String id);
+	public UserModel getUserByEmail(String email);
+
 }
