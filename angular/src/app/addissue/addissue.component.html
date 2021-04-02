@@ -2,16 +2,17 @@
     <div class="col-md-10 col-sm-6 col-10">
         <div class="add">
             <div class="table-title">Add Issue</div>
-            <form action="#" class="sign-in-form">
+            <form action="#" class="sign-in-form" (submit)="onSubmit(name.value,desc.value,imageUrl.value);">
                 <div class="input-field">
-                  <input type="text" placeholder="Name of the Issue" />
+                  <input #name type="text" placeholder="Name of the Issue" />
                 </div>
                 <div class="input-field">
-                  <input type="text" placeholder="Description" />
+                  <input #desc type="text" placeholder="Description" />
                 </div>
                 <div class="input-field">
-                    <input type="text" placeholder="Image url" />
+                    <input #imageUrl  type="text" placeholder="Image url"  (change)="image(imageUrl.value);"/>
                   </div>
+                  <img id="preview" #preview src="{{source}}" *ngIf="show" height="100px" width="100px">
                 <input type="submit" value="Submit" class="btn solid" />
               </form>
 

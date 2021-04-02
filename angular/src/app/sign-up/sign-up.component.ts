@@ -71,9 +71,6 @@ export class SignUpComponent implements OnInit {
         return false;
         }
     }
-  log(x: any)
-  {
-    console.log(x);
-  }
+ 
 
 }
