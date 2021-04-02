@@ -1,3 +1,6 @@
+import { AddissueComponent } from './addissue/addissue.component';
+import { TablesolComponent } from './tablesol/tablesol.component';
+import { TableactComponent } from './tableact/tableact.component';
 import { AdminModule } from './admin/admin.module';
 import { AdmindevelopertableComponent } from './admin/admindevelopertable/admindevelopertable.component';
 import { DeveloperTableComponent } from './developer/developer-table/developer-table.component';
@@ -24,7 +27,11 @@ import { AdmindeveloperComponent } from './admin/admindeveloper/admindeveloper.c
     SignUpComponent,
     SignInComponent,
     UserComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    TableactComponent,
+    TablesolComponent,
+    AddissueComponent
+    
   ],
   imports: [
     BrowserModule,

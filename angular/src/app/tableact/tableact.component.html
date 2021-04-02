@@ -8,42 +8,12 @@
             
         </tr>
     </thead>
-    <tbody>
+    <tbody *ngFor="let issue of issues;">
         <tr>
-            <td>#202103114</td>
-            <td>LAN Driver</td>
-            <td>18-03-2021</td>
+            <td>{{issue.issueID}}</td>
+            <td>{{issue.issueName}}</td>
+            <td>{{issue.createdOn}}</td>
             <td>Active</td>
         </tr>
-        <tr>
-            <td>#202103115</td>
-            <td>LAN Driver</td>
-            <td>18-03-2021</td>
-            <td>Active</td>  
-        </tr>
-        <tr>
-            
-            <td>#202103116</td>
-            <td>LAN Driver</td>
-            <td>18-03-2021</td>
-            <td>Active</td>
-        
-        </tr>
-        <tr>
-            
-            <td>#202103117</td>
-            <td>LAN Driver</td>
-            <td>18-03-2021</td>
-            <td>Active</td>
-        
-        </tr>					
-        <tr>
-            
-            <td>#202103118</td>
-            <td>LAN Driver</td>
-            <td>18-03-2021</td>
-            <td>Active</td>
-            
-        </tr> 
     </tbody>
 </table>
