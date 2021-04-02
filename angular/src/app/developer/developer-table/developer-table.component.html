@@ -68,47 +68,20 @@
                 <th>Status</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>XYZ7678</td>
-                <td>LAN Driver</td>
-                <td>18-09-20</td>
-                <td>XYZ</td>
-                <td>
-                     Active
-                    <a href="#editStatus" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                </td>
-            </tr>
-            <tr>
-    
-                <td>XYZ7678</td>
-                <td>LAN Driver</td>
-                <td>18-09-20</td>
-                <td>XYZ</td>
-                <td>
-                    Active
-                    <a href="#editStatus" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>XYZ7678</td>
-                <td>LAN Driver</td>
-                <td>18-09-20</td>
-                <td>XYZ</td>
-                <td>
-                    Active
-                    <a href="#editStatus" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                </td>
-            </tr>			
-            <tr>
-    
-                <td>XYZ7678</td>
-                <td>LAN Driver</td>
-                <td>18-09-20</td>
-                <td>XYZ</td>
-                <td>
-                    Active<a href="#editStatus" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                </td>
-            </tr> 
+        <tbody *ngFor="let issue of issues;">
+            
+                <tr>
+                    <td>{{issue.issueId}}</td>
+                    <td>{{issue.issueName}}</td>
+                    <td>{{issue.createdOn}}</td>
+                    <td>{{issue.developerName}}
+                    <td>
+                      {{issue.status}}
+                      <a href="#editStatus" class="edit" data-toggle="modal" (click)="onClick(issue)"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                    </td>
+                   
+                </tr>
+            
         </tbody>
     </table>
+
