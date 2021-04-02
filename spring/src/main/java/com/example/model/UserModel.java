@@ -12,9 +12,8 @@ import javax.persistence.Table;
 public class UserModel {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="uid")
-	private int id;
+	private String id;
 	
 	@Column(name="email")
 	private String email;
@@ -35,10 +34,10 @@ public class UserModel {
 	private String role;
 	
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getEmail() {
