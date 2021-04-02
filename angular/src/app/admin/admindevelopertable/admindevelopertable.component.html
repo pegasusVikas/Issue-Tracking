@@ -7,42 +7,13 @@
             <th>Options</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody *ngFor="let developer of developers;">
         <tr>
-            <td>XYZ7678</td>
-            <td>Mr XYZ</td>
-            <td>Developer</td>
+            <td>{{developer.developerId}}</td>
+            <td>{{developer.developerName}}</td>
+            <td>{{developer.role}}</td>
             <td>
-                <a href="#editStatus" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                <a href="#delete" class="delete" title="Delete" data-toggle="modal"><i class="material-icons">&#xE872;</i></a>
-            </td>
-        </tr>
-        <tr>
-
-            <td>XYZ7678</td>
-            <td>Mr XYZ</td>
-            <td>Developer</td>
-            <td>
-                <a href="#editStatus" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                <a href="#delete" class="delete" title="Delete" data-toggle="modal"><i class="material-icons">&#xE872;</i></a>
-            </td>
-        </tr>
-        <tr>
-            <td>XYZ7678</td>
-            <td>Mr XYZ</td>
-            <td>Developer</td>
-            <td>
-                <a href="#editStatus" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                <a href="#delete" class="delete" title="Delete" data-toggle="modal"><i class="material-icons">&#xE872;</i></a>
-              </td>
-        </tr>			
-        <tr>
-
-            <td>XYZ7678</td>
-            <td>Mr XYZ</td>
-            <td>Developer</td>
-            <td>
-                <a href="#editStatus" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                <a href="#editStatus" class="edit" data-toggle="modal" (click)="onClick(developer)"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                 <a href="#delete" class="delete" title="Delete" data-toggle="modal"><i class="material-icons">&#xE872;</i></a>
             </td>
         </tr> 

@@ -1,3 +1,4 @@
+import { AddissueComponent } from './addissue/addissue.component';
 import { UserComponent } from './user/user.component';
 import { AdmindevelopertableComponent } from './admin/admindevelopertable/admindevelopertable.component';
 import { AdminModule } from './admin/admin.module';
@@ -16,7 +17,9 @@ const routes: Routes =[
   {path:"developer/home",component:DeveloperHomeComponent},
   {path:"admin/home",component:AdminHomeComponent},
   {path:"admin/developer",component:AdmindeveloperComponent},
-  {path:"user",component:UserComponent}
+  {path:"user/home",component:UserComponent},
+  {path:"user/addIssue",component:AddissueComponent}
+
 ];
 
 @NgModule({
