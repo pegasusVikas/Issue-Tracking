@@ -131,20 +131,26 @@
                     <div class="col-sm-8">
                         <admin-table [issues]="issues" [tab]="tab" (outputId)="getId($event)"></admin-table>
                     </div>
-                    <div class="col-sm-4">
+            <div class="col-sm-4">
                 <div class="card">
                     <div class="card-body">
                         <label><h1>DEVELOPER XYZ</h1></label>
                            
                                 <form>
-                                    <label style="color:#FFC107;"><h2>Total Issues : </h2></label>
-                                    <label style="color:#FFC107;"><h2>42</h2></label> 
+                                    <label style="color:#FFC107;"><h2> Users : </h2></label>
+                                    <label style="color:#FFC107;"><h2>{{admin_stats.users}}</h2></label> 
+                                    <br><br>
+                                    <label style="color:#FFC107;"><h2>Developers : </h2></label>
+                                    <label style="color:#FFC107;"><h2>{{admin_stats.developers}}</h2></label> 
+                                    <br><br>
+                                    <label style="color:#FFC107;"><h2>New Issues : </h2></label>
+                                    <label style="color:#FFC107;"><h2>{{admin_stats.new_issues}}</h2></label> 
                                     <br><br>
                                     <label style="color: red;"><h2>Solved Issues : </h2></label>
-                                    <label style="color: red;"><h2>20</h2></label>
+                                    <label style="color: red;"><h2>{{admin_stats.solved_issues}}</h2></label>
                                     <br><br>
                                     <label style="color: green;"><h2>Active Issues : </h2></label>
-                                    <label style="color: green;"><h2>22</h2></label>
+                                    <label style="color: green;"><h2>{{admin_stats.active_issues}}</h2></label>
                                     <br><br>
                                 </form>
                     </div>
@@ -158,22 +164,22 @@
     <div id="editStatus" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form>
+                <form action="#" >
                     <div class="modal-header">						
                         <h4 class="modal-title">Map issue {{selected_issue.issuename}} ({{selected_issue.issueid}})</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">					
                         <div class="form-group">
-                            <label for="exampleFormControlSelect1">Status</label>
-                            <select  class="form-control" id="exampleFormControlSelect1">
+                            <label for="exampleFormControlSelect1">Assign Developer</label>
+                            <select #option class="form-control" id="exampleFormControlSelect1">
                                 <option *ngFor="let dev of available_developers" [value]="dev.id" >{{dev.username}}</option>
                             </select>
                           </div>			
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <input type="submit" class="btn btn-info"  value="Save">
+                        <input (click)="assignDev(option.value,selected_issue.issueid)" type="button" class="btn btn-info"  data-dismiss="modal" value="Save">
                     </div>
                 </form>
             </div>

@@ -34,16 +34,16 @@ export class SignUpComponent implements OnInit {
       mobilenumber:phone,
       active:1,
       role:"user"
-    }).toPromise().then((res:any)=>{
-      if(res)
+    },{responseType:'text'}).toPromise().then((res:any)=>{
+      if(res=="Successfully registered")
       {
         //sucess
-        console.log("registered");
+        console.log(res);
       }
       else{
-        this.showError("Can't SignUp.User already exists");
+        this.showError(res);
       }
-    })
+    }).catch((err)=>{console.log(err)})
   }
   }
   showError(error:String){

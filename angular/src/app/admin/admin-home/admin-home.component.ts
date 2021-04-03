@@ -11,6 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AdminHomeComponent implements OnInit {
   url="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io"
   tab:String="new"
+  admin_stats:any={}
   issues:{}[]=[]
   new_issues:{}[]=[]
   active_issues:{}[]=[]
@@ -49,6 +50,10 @@ export class AdminHomeComponent implements OnInit {
     }else{
       this.router.navigate(['/signin']);
     }
+
+    this.http.get(this.url+"/admin/issuedata",{withCredentials:true})
+      .toPromise().then((res)=>{console.log(res);this.admin_stats=res})
+      .catch((err)=>{console.log(err);window.location.reload();})
    }
 
   ngOnInit(): void {
@@ -69,7 +74,17 @@ export class AdminHomeComponent implements OnInit {
     else if(tab=="solved")this.issues=this.solved_issues
     else console.log("something is wrong")
   }
-  
+  assignDev(developer:String,issue:String){
+    console.log(developer,issue);
+    this.http.post(this.url+`/admin/mapIssue/${issue}`,{devid:developer}).toPromise().then((res)=>{
+      if(res){
+        console.log(res)
+      }else{
+        window.location.reload();
+      }
+    }).catch((err)=>{console.log(err);window.location.reload();})
+
+  }
   fetchIssues(){
     this.http.get(this.url+"/admin",{observe:'response'}).toPromise().then((response)=>{
       let res=response.body
@@ -91,12 +106,13 @@ export class AdminHomeComponent implements OnInit {
     }).catch((err)=>{console.log(err);window.location.reload();})
   }
   sortIssues(issues:any){
+    console.log(issues)
     issues.forEach((issue:any)=>{
       if(issue.status=="solved")
       this.solved_issues.push(issue);
-      else if(issue.status=="active")
-      this.active_issues.push(issue);
-      else this.new_issues.push(issue);
+      else if(issue.connectedby==null)
+      this.new_issues.push(issue);
+      else this.active_issues.push(issue);
     })
   }
 
