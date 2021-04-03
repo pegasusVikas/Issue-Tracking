@@ -14,7 +14,7 @@
             <td>{{developer.role}}</td>
             <td>
                 <a href="#editStatus" class="edit" data-toggle="modal" (click)="onClick(developer)"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                <a href="#delete" class="delete" title="Delete" data-toggle="modal"><i class="material-icons">&#xE872;</i></a>
+                <a href="#delete" class="delete" title="Delete" (click)="onClick(developer)" data-toggle="modal"><i class="material-icons">&#xE872;</i></a>
             </td>
         </tr> 
     </tbody>

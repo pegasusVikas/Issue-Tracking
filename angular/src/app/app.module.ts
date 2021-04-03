@@ -27,10 +27,10 @@ import { AdmindeveloperComponent } from './admin/admindeveloper/admindeveloper.c
     SignUpComponent,
     SignInComponent,
     UserComponent,
-    NavigationBarComponent,
     TableactComponent,
     TablesolComponent,
-    AddissueComponent
+    AddissueComponent,
+    NavigationBarComponent
     
   ],
   imports: [

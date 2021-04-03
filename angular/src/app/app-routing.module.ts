@@ -19,7 +19,6 @@ const routes: Routes =[
   {path:"admin/developer",component:AdmindeveloperComponent},
   {path:"user/home",component:UserComponent},
   {path:"user/addIssue",component:AddissueComponent}
-
 ];
 
 @NgModule({
