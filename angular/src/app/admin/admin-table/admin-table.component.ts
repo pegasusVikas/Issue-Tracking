@@ -7,6 +7,7 @@ import { Component, Input,Output, OnInit, EventEmitter } from '@angular/core';
 })
 export class AdminTableComponent implements OnInit {
   @Input("issues") issues:any;
+  @Input("tab") tab:any;
   @Output() outputId =new EventEmitter<String>();
   constructor() { }
 

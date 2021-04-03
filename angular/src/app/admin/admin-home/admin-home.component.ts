@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-home.component.css']
 })
 export class AdminHomeComponent implements OnInit {
+  tab:String="new"
   new_issues=[{
   issueId:"2dr4" ,
   imageUrl: "",
@@ -48,6 +49,10 @@ selected_issue={
   getId(issue:any){
     this.selected_issue=issue
     console.log("output to parent" + issue);
+  }
+
+  setTab(tab:String){
+    this.tab=tab;
   }
 
 }
