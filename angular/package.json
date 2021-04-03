@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 8081 --disable-host-check --host=0.0.0.0",
+    "start": "ng serve --port 8081",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~11.1.1",
     "@angular/platform-browser-dynamic": "~11.1.1",
     "@angular/router": "~11.1.1",
+    "all": "^0.0.0",
     "bootstrap": "^4.6.0",
     "jquery": "^3.6.0",
     "material-design-icons": "^3.0.1",

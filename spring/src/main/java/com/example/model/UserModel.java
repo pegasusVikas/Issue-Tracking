@@ -2,6 +2,8 @@ package com.example.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -9,13 +11,10 @@ import javax.persistence.Table;
 @Table(name="users")
 public class UserModel {
 	
-	@Override
-	public String toString() {
-		return "UserModel [email=" + email + ", password=" + password + ", username=" + username + ", mobileno="
-				+ mobileno + ", active=" + active + ", role=" + role + "]";
-	}
-	
 	@Id
+	@Column(name="uid")
+	private String id;
+	
 	@Column(name="email")
 	private String email;
 	
@@ -25,8 +24,8 @@ public class UserModel {
 	@Column(name="username")
 	private String username;
 	
-	@Column(name="mobileno")
-	private String mobileno;
+	@Column(name="mobilenumber")
+	private String mobilenumber;
 	
 	@Column(name="active")
 	private int active;
@@ -35,6 +34,12 @@ public class UserModel {
 	private String role;
 	
 	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -53,11 +58,11 @@ public class UserModel {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getMobileno() {
-		return mobileno;
+	public String getMobilenumber() {
+		return mobilenumber;
 	}
-	public void setMobileno(String mobileno) {
-		this.mobileno = mobileno;
+	public void setMobilenumber(String mobilenumber) {
+		this.mobilenumber = mobilenumber;
 	}
 	public int getActive() {
 		return active;
@@ -73,4 +78,5 @@ public class UserModel {
 	}
 	
 	
+
 }

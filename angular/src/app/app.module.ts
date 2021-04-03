@@ -1,5 +1,7 @@
 import {CookieService} from 'ngx-cookie-service';
-
+import { AddissueComponent } from './addissue/addissue.component';
+import { TablesolComponent } from './tablesol/tablesol.component';
+import { TableactComponent } from './tableact/tableact.component';
 import { AdminModule } from './admin/admin.module';
 import { AdmindevelopertableComponent } from './admin/admindevelopertable/admindevelopertable.component';
 import { DeveloperTableComponent } from './developer/developer-table/developer-table.component';
@@ -26,7 +28,11 @@ import { AdmindeveloperComponent } from './admin/admindeveloper/admindeveloper.c
     SignUpComponent,
     SignInComponent,
     UserComponent,
+    TableactComponent,
+    TablesolComponent,
+    AddissueComponent,
     NavigationBarComponent
+    
   ],
   imports: [
     BrowserModule,

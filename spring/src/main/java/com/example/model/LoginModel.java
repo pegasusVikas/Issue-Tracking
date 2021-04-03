@@ -1,6 +1,5 @@
 package com.example.model;
 
-
 public class LoginModel {
 
 	private String email;
@@ -18,5 +17,6 @@ public class LoginModel {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 	
 }
