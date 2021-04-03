@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.AssignmentModel;
 import com.example.model.IssueModel;
+import com.example.model.OverAllStatAdmin;
+import com.example.model.OverAllStatUser;
 import com.example.model.UserModel;
 import com.example.repo.IssueRepository;
 import com.example.repo.UserRepository;
@@ -29,21 +32,61 @@ public class IssueController {
 	@GetMapping("/admin")
 	public List<IssueModel> getIssue()
 	{
-		return issue_repo.findAll();
+		return display(issue_repo.findAll());
 	}
 	
 	@GetMapping("/issue/{id}")
 	public List<IssueModel> getHomeIssue(@CookieValue(value = "uid", defaultValue = "Null") String id)
 	{
-		int uid=Integer.parseInt(id);
-		UserModel curr_user=user_repo.getUserById(uid);
+		String[] cookie=id.split("_");
+		id=cookie[1];
+		UserModel curr_user=user_repo.getUserById(id);
 		if(curr_user.getRole().equals("user"))
 		{
-			return issue_repo.getIssuesOfUser(curr_user.getEmail());
+			return display(issue_repo.getIssuesOfUser(curr_user.getEmail()));
 		}
 		else if(curr_user.getRole().equals("developer"))
 		{
-			return issue_repo.getIssuesConnectedToDev(curr_user.getUsername());
+			return display(issue_repo.getIssuesConnectedToDev(curr_user.getId()));
+		}
+		return null;
+	}
+	
+	//helper method to display issues
+	public List<IssueModel> display(List<IssueModel> temp)
+	{
+		if(temp!=null)
+		{
+			List<IssueModel> x = new ArrayList<>();
+			for(IssueModel issue:temp)
+			{
+				if(issue.getConnectedby()!=null)
+				{
+					UserModel user=user_repo.getUserById(issue.getConnectedby());
+					if(user != null)
+					{
+						IssueModel disp=new IssueModel();
+						disp.setIssueid(issue.getIssueid());
+						disp.setIssuename(issue.getIssuename());
+						disp.setImageurl(issue.getImageurl());
+						disp.setIssuedesc(issue.getIssuedesc());
+						disp.setCreatedon(issue.getCreatedon());
+						disp.setCreatedby(issue.getCreatedby());
+						disp.setConnectedby(user.getUsername());
+						disp.setStatus(issue.getStatus());
+						x.add(disp);
+					}
+					else
+					{
+						x.add(issue);
+					}
+				}
+				else
+				{
+					x.add(issue);
+				}
+			}
+			return x;
 		}
 		return null;
 	}
@@ -59,10 +102,11 @@ public class IssueController {
 	}
 	
 	@PostMapping("/addIssue")
-	public void IssueSave(@RequestBody IssueModel data, @CookieValue(value = "uid", defaultValue = "Null") String id)
+	public boolean IssueSave(@RequestBody IssueModel data, @CookieValue(value = "uid", defaultValue = "Null") String id)
 	{
-		int uid=Integer.parseInt(id);
-		UserModel curr_user=user_repo.getUserById(uid);
+		String[] cookie=id.split("_");
+		id=cookie[1];
+		UserModel curr_user=user_repo.getUserById(id);
 		
 		String s=issue_repo.genId();
 		if(s==null)
@@ -76,10 +120,10 @@ public class IssueController {
 		
 		data.setCreatedby(curr_user.getEmail());
 		data.setConnectedby(null);
-		data.setStatus("Active");
+		data.setStatus("active");
 		
 		issue_repo.save(data);
-		
+		return true;
 	}
 	
 	//helper method to generate Id for an Issue
@@ -113,19 +157,85 @@ public class IssueController {
 	{
 		String issueid="#"+id;
 		IssueModel issue=issue_repo.getIssueById(issueid);
-		issue.setStatus("Solved");
+		issue.setStatus("solved");
 		issue_repo.save(issue);
 		return ;
 	}
 	
-	@PutMapping(value="/admin")
-	public void assignIssue(@RequestBody AssignmentModel data)
+	//Display Available Developers to admin in order to map an Issue
+	@GetMapping(value="/availabledevs")
+	public List<UserModel> displayDev()
 	{
-		
-		IssueModel issue=issue_repo.getIssueById(data.getIssueid());
-		issue.setConnectedby(data.getDevname());
-		issue_repo.save(issue);
-		return ;
+		List<UserModel> devs=user_repo.getDevelopers();
+		List<String> lst=issue_repo.unavailableDevelopers();
+		if(lst!=null)
+		{
+			for(String s:lst)
+			{
+				devs.remove(user_repo.getUserById(s));
+			}
+		}
+		return devs;
 	}
+	
+	@PostMapping(value="/admin/mapIssue/{id}")
+	public boolean assignIssue(@PathVariable String id,@RequestBody AssignmentModel data)
+	{
+		data.setIssueid("#"+id);
+		IssueModel issue=issue_repo.getIssueById(data.getIssueid());
+		if((issue!=null) && (issue_repo.countActiveIssuesAssigned(data.getDevid())<5))
+		{
+			issue.setConnectedby(data.getDevid());
+			issue_repo.save(issue);
+			return true;
+		}
+		return false;
+	}
+	
+	@GetMapping("/user/issuedata")
+	public OverAllStatUser getOverAllStatUser(@CookieValue(value = "uid", defaultValue = "Null") String id)
+	{
+		String[] cookie=id.split("_");
+		id=cookie[1];
+		OverAllStatUser dataissues=new OverAllStatUser();
+		UserModel curr_user=user_repo.getUserById(id);
+		String email=curr_user.getEmail();
+		dataissues.setTotalissues(issue_repo.getTotalCount(email));
+		dataissues.setActive(issue_repo.getActiveCount(email));
+		dataissues.setSolved(dataissues.getTotalissues()-dataissues.getActive());
+		return dataissues;
+		
+	}
+	
+	@GetMapping("/dev/issuedata")
+	public OverAllStatUser getOverAllStatDev(@CookieValue(value = "uid", defaultValue = "Null") String id)
+	{
+		String[] cookie=id.split("_");
+		id=cookie[1];
+		OverAllStatUser dataissues=new OverAllStatUser();
+		UserModel curr_user=user_repo.getUserById(id);
+		dataissues.setTotalissues(issue_repo.getTotalCountDev(curr_user.getId()));
+		dataissues.setActive(issue_repo.getActiveCountDev(curr_user.getId()));
+		dataissues.setSolved(dataissues.getTotalissues()-dataissues.getActive());
+		return dataissues;
+		
+	}
+	
+	@GetMapping("/admin/issuedata")
+	public OverAllStatAdmin getOverAllStatAdmin(@CookieValue(value = "uid", defaultValue = "Null") String id)
+	{
+		String[] cookie=id.split("_");
+		id=cookie[1];
+		OverAllStatAdmin dataissues=new OverAllStatAdmin();
+		dataissues.setUsers(user_repo.getUserCount());
+		dataissues.setDevelopers(user_repo.getDevCount());
+		dataissues.setNew_issues(issue_repo.getNewCount());
+		dataissues.setActive_issues(issue_repo.getActiveCount());
+		dataissues.setSolved_issues(issue_repo.getSolvedCount());
+		return dataissues;
+		
+	}
+	
+	
 	
 }

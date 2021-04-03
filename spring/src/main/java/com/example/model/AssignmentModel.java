@@ -3,7 +3,7 @@ package com.example.model;
 public class AssignmentModel {
 	
 	private String issueid;
-	private String devname;
+	private String devid;
 	
 	public String getIssueid() {
 		return issueid;
@@ -11,13 +11,12 @@ public class AssignmentModel {
 	public void setIssueid(String issueid) {
 		this.issueid = issueid;
 	}
-	public String getDevname() {
-		return devname;
+	public String getDevid() {
+		return devid;
 	}
-	public void setDevname(String devname) {
-		this.devname = devname;
+	public void setDevid(String devid) {
+		this.devid = devid;
 	}
-	
 	
 
 }

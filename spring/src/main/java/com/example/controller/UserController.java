@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.model.IssueModel;
 import com.example.model.UserModel;
-
+import com.example.repo.IssueRepository;
 import com.example.repo.UserRepository;
 
 @RestController
@@ -25,73 +26,107 @@ public class UserController {
 	@Autowired
 	UserRepository repo;
 	
+	@Autowired
+	IssueRepository issue_repo;
+	
 	@GetMapping(value="/admin/developers")
 	public List<UserModel> getUsers()
 	{
 		return repo.getDevelopers();
 	}
 	
-	public UserModel userDataById(int uid)
+	public UserModel userDataById(String uid)
 	{
 		return repo.getUserById(uid);
 	}
 	
 	@PutMapping(value="/admin/updateDeveloper/{id}")
-	public void userEditSave(@PathVariable String id, @RequestBody UserModel data)
+	public String userEditSave(@PathVariable String id, @RequestBody UserModel data)
 	{
-		int uid=Integer.parseInt(id);
-		UserModel edit_user=repo.getUserById(uid);
-		edit_user.setUsername(data.getUsername());
-		edit_user.setMobilenumber(data.getMobilenumber());
-		repo.save(edit_user);
-		
+		UserModel edit_user=repo.getUserById(id);
+		if(edit_user!=null)
+		{
+			UserModel x=repo.getUserByEmail(data.getEmail());
+			UserModel y=repo.checkUserNameExists(data.getUsername());
+			
+			if(x!=null && !(x.getId().equals(id)))
+				return "Email already exists";
+			else if(y!=null && !(y.getId().equals(id)))
+				return "Username already taken";
+			else {
+				edit_user.setEmail(data.getEmail());
+				edit_user.setUsername(data.getUsername());
+				edit_user.setMobilenumber(data.getMobilenumber());
+				edit_user.setPassword(data.getPassword());
+				repo.save(edit_user);
+				return "Edit Successful";
+			}
+		}
+		return "";
 	}
 	
 	@PostMapping(value="/admin/addDevelopers")
-	public void userSave(@RequestBody UserModel data)
+	public String userSave(@RequestBody UserModel data)
 	{
-		if(repo.getUserByEmail(data.getEmail())==null)
+		if (repo.getUserByEmail(data.getEmail())!=null)
 		{
+			return "Email already exists";
+		}
+		else if(repo.checkUserNameExists(data.getUsername())!=null)
+		{
+			return "Username already exists";
+		}
+		else
+		{
+			String s=repo.genId();
+			if(s==null)
+				data.setId("1000000");
+			else
+				data.setId(idGen(s,1));
+			
 			data.setRole("developer");
 			data.setActive(0);
 			repo.save(data);
+			return "Successfully added";
 		}
+		
 	}
+	
+	//helper method to generate Id for an Issue
+		public String idGen(String id1,int i)
+	    {
+	        StringBuilder id=new StringBuilder(id1);  
+	        int n=id.length()-i;
+	        if (id.charAt(n)!='9')
+	        {
+	            int temp=Integer.parseInt(String.valueOf(id.charAt(n)))+1;
+	            id.setCharAt(n,String.valueOf(temp).charAt(0));
+	            return String.valueOf(id);
+	        }
+	        else
+	        {
+	            id.setCharAt(n,'0');
+	            i=i+1;
+	            return idGen(String.valueOf(id),i);
+	        }
+		
+	    }
 	
 	@DeleteMapping(value="/admin/deleteDeveloper/{id}")
 	public void userDelete(@PathVariable String id)
 	{
-		int uid=Integer.parseInt(id);
-		repo.deleteById(uid);
-	}
-	
-	//User sign up
-	@PostMapping(value="/signUp")
-	public boolean userSignup(@RequestBody UserModel data,HttpServletResponse response)
-	{
-		if(repo.getUserByEmail(data.getEmail())==null)
+		List<IssueModel> ass_dev=issue_repo.getIssuesConnectedToDev(id);
+		if(ass_dev!=null)
 		{
-			data.setRole("user");
-			data.setActive(1);
-			repo.save(data);
-			UserModel curr_user=repo.getUserByEmail(data.getEmail());
-			Cookie cookie=new Cookie("uid",String.valueOf(curr_user.getId()));
-			response.addCookie(cookie);
-			return true;
+			for(IssueModel x:ass_dev)
+			{
+				if(x.getStatus().equals("active"))
+					x.setConnectedby(null);
+				else
+					x.setConnectedby(repo.getUserById(id).getUsername());
+			}
 		}
-		System.out.println("User Already exists");
-		return false;
+		repo.deleteById(id);
 	}
-	
-	@PutMapping(value="/logout")
-	public void Logout(@CookieValue(value = "uid", defaultValue = "Null") String id)
-	{
-		int uid=Integer.parseInt(id);
-		UserModel curr_user=repo.getUserById(uid);
-		curr_user.setActive(0);
-		repo.save(curr_user);
-		return ;
-	}
-	
 	
 }
