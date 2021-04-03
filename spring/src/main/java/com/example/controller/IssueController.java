@@ -32,20 +32,61 @@ public class IssueController {
 	@GetMapping("/admin")
 	public List<IssueModel> getIssue()
 	{
-		return issue_repo.findAll();
+		return display(issue_repo.findAll());
 	}
 	
 	@GetMapping("/issue/{id}")
 	public List<IssueModel> getHomeIssue(@CookieValue(value = "uid", defaultValue = "Null") String id)
 	{
+		String[] cookie=id.split("_");
+		id=cookie[1];
 		UserModel curr_user=user_repo.getUserById(id);
 		if(curr_user.getRole().equals("user"))
 		{
-			return issue_repo.getIssuesOfUser(curr_user.getEmail());
+			return display(issue_repo.getIssuesOfUser(curr_user.getEmail()));
 		}
 		else if(curr_user.getRole().equals("developer"))
 		{
-			return issue_repo.getIssuesConnectedToDev(curr_user.getId());
+			return display(issue_repo.getIssuesConnectedToDev(curr_user.getId()));
+		}
+		return null;
+	}
+	
+	//helper method to display issues
+	public List<IssueModel> display(List<IssueModel> temp)
+	{
+		if(temp!=null)
+		{
+			List<IssueModel> x = new ArrayList<>();
+			for(IssueModel issue:temp)
+			{
+				if(issue.getConnectedby()!=null)
+				{
+					UserModel user=user_repo.getUserById(issue.getConnectedby());
+					if(user != null)
+					{
+						IssueModel disp=new IssueModel();
+						disp.setIssueid(issue.getIssueid());
+						disp.setIssuename(issue.getIssuename());
+						disp.setImageurl(issue.getImageurl());
+						disp.setIssuedesc(issue.getIssuedesc());
+						disp.setCreatedon(issue.getCreatedon());
+						disp.setCreatedby(issue.getCreatedby());
+						disp.setConnectedby(user.getUsername());
+						disp.setStatus(issue.getStatus());
+						x.add(disp);
+					}
+					else
+					{
+						x.add(issue);
+					}
+				}
+				else
+				{
+					x.add(issue);
+				}
+			}
+			return x;
 		}
 		return null;
 	}
@@ -63,6 +104,7 @@ public class IssueController {
 	@PostMapping("/addIssue")
 	public boolean IssueSave(@RequestBody IssueModel data, @CookieValue(value = "uid", defaultValue = "Null") String id)
 	{
+		
 		UserModel curr_user=user_repo.getUserById(id);
 		
 		String s=issue_repo.genId();
