@@ -115,7 +115,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-8">
-                        <admin-table [issues]="new_issues" [tab]="tab" (outputId)="getId($event)"></admin-table>
+                        <admin-table [issues]="issues" [tab]="tab" (outputId)="getId($event)"></admin-table>
                     </div>
                     <div class="col-sm-4">
                 <div class="card">
@@ -148,15 +148,14 @@
             <div class="modal-content">
                 <form>
                     <div class="modal-header">						
-                        <h4 class="modal-title">Map issue {{selected_issue.issueName}} ({{selected_issue.issueId}})</h4>
+                        <h4 class="modal-title">Map issue {{selected_issue.issuename}} ({{selected_issue.issueid}})</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">					
                         <div class="form-group">
                             <label for="exampleFormControlSelect1">Status</label>
-                            <select class="form-control" id="exampleFormControlSelect1">
-                                <option value="1">Active</option>
-                              <option value="2">Resolved</option>
+                            <select  class="form-control" id="exampleFormControlSelect1">
+                                <option *ngFor="let dev of available_developers" [value]="dev.id" >{{dev.username}}</option>
                             </select>
                           </div>			
                     </div>

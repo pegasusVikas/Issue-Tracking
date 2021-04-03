@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  loginURL="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io/addUser";
+  loginURL="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io/signup";
   errMsg:String=""
   hasErr:Boolean=false
   constructor(private http:HttpClient) { }
@@ -31,7 +31,7 @@ export class SignUpComponent implements OnInit {
       email:email,
       password:password1,
       username:username,
-      mobileno:phone,
+      mobilenumber:phone,
       active:1,
       role:"user"
     }).toPromise().then((res:any)=>{
