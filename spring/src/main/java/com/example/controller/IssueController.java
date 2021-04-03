@@ -104,7 +104,8 @@ public class IssueController {
 	@PostMapping("/addIssue")
 	public boolean IssueSave(@RequestBody IssueModel data, @CookieValue(value = "uid", defaultValue = "Null") String id)
 	{
-		
+		String[] cookie=id.split("_");
+		id=cookie[1];
 		UserModel curr_user=user_repo.getUserById(id);
 		
 		String s=issue_repo.genId();
@@ -194,6 +195,8 @@ public class IssueController {
 	@GetMapping("/user/issuedata")
 	public OverAllStatUser getOverAllStatUser(@CookieValue(value = "uid", defaultValue = "Null") String id)
 	{
+		String[] cookie=id.split("_");
+		id=cookie[1];
 		OverAllStatUser dataissues=new OverAllStatUser();
 		UserModel curr_user=user_repo.getUserById(id);
 		String email=curr_user.getEmail();
@@ -207,6 +210,8 @@ public class IssueController {
 	@GetMapping("/dev/issuedata")
 	public OverAllStatUser getOverAllStatDev(@CookieValue(value = "uid", defaultValue = "Null") String id)
 	{
+		String[] cookie=id.split("_");
+		id=cookie[1];
 		OverAllStatUser dataissues=new OverAllStatUser();
 		UserModel curr_user=user_repo.getUserById(id);
 		dataissues.setTotalissues(issue_repo.getTotalCountDev(curr_user.getId()));
@@ -219,6 +224,8 @@ public class IssueController {
 	@GetMapping("/admin/issuedata")
 	public OverAllStatAdmin getOverAllStatAdmin(@CookieValue(value = "uid", defaultValue = "Null") String id)
 	{
+		String[] cookie=id.split("_");
+		id=cookie[1];
 		OverAllStatAdmin dataissues=new OverAllStatAdmin();
 		dataissues.setUsers(user_repo.getUserCount());
 		dataissues.setDevelopers(user_repo.getDevCount());

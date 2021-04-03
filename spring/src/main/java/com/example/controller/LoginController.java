@@ -1,9 +1,13 @@
 package com.example.controller;
 
+
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,8 +34,17 @@ public class LoginController {
 			{
 				user.setActive(1);
 				repo.save(user);
-				Cookie cookie = new Cookie("uid",user.getId());
-				response.addCookie(cookie);
+				//Cookie cookie = new Cookie("uid",user.getId());
+				//response.addCookie(cookie);
+				ResponseCookie cookie = ResponseCookie.from("uid",user.getRole()+"_"+user.getId())
+						.domain("examlyiopb.examly.io")
+			            .maxAge(60*60)
+			            .sameSite("None")
+			            .secure(true)
+						.path("/")
+			            .build();
+						System.out.println(cookie.toString());
+			 			response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 				return true;
 			}
 		}
@@ -61,8 +74,17 @@ public class LoginController {
 				data.setActive(1);
 				repo.save(data);
 				UserModel curr_user=repo.getUserByEmail(data.getEmail());
-				Cookie cookie=new Cookie("uid",curr_user.getId());
-				response.addCookie(cookie);
+				//Cookie cookie=new Cookie("uid",curr_user.getId());
+				//response.addCookie(cookie);
+				ResponseCookie cookie = ResponseCookie.from("uid",curr_user.getRole()+"_"+curr_user.getId())
+						.domain("examlyiopb.examly.io")
+			            .maxAge(60*60)
+			            .sameSite("None")
+			            .secure(true)
+						.path("/")
+			            .build();
+						System.out.println(cookie.toString());
+			 			response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 				return "Successfully registered";
 			}
 			
@@ -91,6 +113,8 @@ public class LoginController {
 		@PutMapping(value="/logout")
 		public void Logout(@CookieValue(value = "uid", defaultValue = "Null") String id)
 		{
+			String[] cookie=id.split("_");
+			id=cookie[1];
 			UserModel curr_user=repo.getUserById(id);
 			curr_user.setActive(0);
 			repo.save(curr_user);
