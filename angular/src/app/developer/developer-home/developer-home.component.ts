@@ -26,7 +26,7 @@ export class DeveloperHomeComponent implements OnInit {
     createdOn: "4-09-20",
     createdBy: "",
     connectedBy: "",
-     status: "Resolved",
+     status: "Active",
      developerName:"Mr ABC"
     }
   ]

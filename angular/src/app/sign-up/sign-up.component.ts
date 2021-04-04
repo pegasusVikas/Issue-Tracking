@@ -16,15 +16,15 @@ export class SignUpComponent implements OnInit {
   }
   onSubmit(email:String,username:String,phone:String,password1:String,password2:String){
     if(password1!=password2)
-    this.showError("Passwords dont match");
+    this.showError("Passwords don't match!");
     else if(!this.validateEmail(email))
     this.showError("Enter a Valid Email");
     else if(username=="")
-    this.showError("User Name cant be empty");
+    this.showError("User Name can't be empty!");
     else if(!this.validatePhonenumber(phone))
     this.showError("Enter a valid Mobile Number");
     else if(password1=="")
-    this.showError("password cant be empty");
+    this.showError("Password can't be empty!");
     else{
     //send form to backend
     this.http.post(this.loginURL,{
@@ -38,7 +38,7 @@ export class SignUpComponent implements OnInit {
       if(res)
       {
         //sucess
-        console.log("registered");
+        console.log("Registered");
       }
       else{
         this.showError("Can't SignUp.User already exists");

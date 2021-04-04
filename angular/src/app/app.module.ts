@@ -1,10 +1,5 @@
 import { AddissueComponent } from './addissue/addissue.component';
-import { TablesolComponent } from './tablesol/tablesol.component';
-import { TableactComponent } from './tableact/tableact.component';
 import { AdminModule } from './admin/admin.module';
-import { AdmindevelopertableComponent } from './admin/admindevelopertable/admindevelopertable.component';
-import { DeveloperTableComponent } from './developer/developer-table/developer-table.component';
-import { DeveloperHomeComponent } from './developer/developer-home/developer-home.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -18,7 +13,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { UserComponent } from './user/user.component';
-import { AdmindeveloperComponent } from './admin/admindeveloper/admindeveloper.component';
+import { UserTableComponent } from './user-table/user-table.component';
 
 
 @NgModule({
@@ -27,10 +22,9 @@ import { AdmindeveloperComponent } from './admin/admindeveloper/admindeveloper.c
     SignUpComponent,
     SignInComponent,
     UserComponent,
-    TableactComponent,
-    TablesolComponent,
     AddissueComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    UserTableComponent
     
   ],
   imports: [

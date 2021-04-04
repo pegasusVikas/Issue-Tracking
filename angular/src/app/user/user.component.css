@@ -1,4 +1,4 @@
-body {
+.body {
     color: #566787;
     background: #f5f5f5;
     font-family: 'Varela Round', sans-serif;
@@ -7,29 +7,21 @@ body {
 .table-responsive {
     margin: 30px 0;
 }
-.radio
-{
-    display: none;
-}
-.panel
-{
-    display:none;
-}
-
 .table-wrapper {
-    min-width: 1000px;
     background: #fff;
     padding: 20px 25px;
     border-radius: 3px;
+    min-width: 1000px;
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
-.table-title{        
+.table-title {        
     padding-bottom: 15px;
-		background: #435d7d;
-		color: #fff;
-		padding: 16px 30px;
-		margin: -20px -25px 10px;
-		border-radius: 3px 3px 0 0;
+    background: #435d7d;
+    color: #fff;
+    padding: 16px 30px;
+    min-width: 100%;
+    margin: -20px -25px 10px;
+    border-radius: 3px 3px 0 0;
 }
 .table-title h2 {
     margin: 5px 0 0;
@@ -58,55 +50,38 @@ body {
     float: left;
     margin-top: 2px;
 }
-table.table tr th, table.table tr td {
-    border-color: #e9e9e9;
-    padding: 12px 15px;
-    vertical-align: middle;
+
+
+/* Modal styles */
+.modal .modal-dialog {
+    max-width: 400px;
 }
-table.table tr th:first-child {
-    width: 60px;
+.modal .modal-header, .modal .modal-body, .modal .modal-footer {
+    padding: 20px 30px;
 }
-table.table tr th:last-child {
-    width: 100px;
+.modal .modal-content {
+    border-radius: 3px;
+    font-size: 14px;
 }
-table.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #fcfcfc;
+.modal .modal-footer {
+    background: #ecf0f1;
+    border-radius: 0 0 3px 3px;
 }
-table.table-striped.table-hover tbody tr:hover {
-    background: #f5f5f5;
+.modal .modal-title {
+    display: inline-block;
 }
-table.table th i {
-    font-size: 13px;
-    margin: 0 5px;
-    cursor: pointer;
+.modal .form-control {
+    border-radius: 2px;
+    box-shadow: none;
+    border-color: #dddddd;
+}
+.modal textarea.form-control {
+    resize: vertical;
+}
+.modal .btn {
+    border-radius: 2px;
+    min-width: 100px;
 }	
-table.table td:last-child i {
-    opacity: 0.9;
-    font-size: 22px;
-    margin: 0 5px;
-}
-a
-{
-    text-decoration: none;
-    color: #fcfcfc;
-}
-#one:checked ~  #one-panel,
-#two:checked ~  #two-panel
-{
-    display: block;
-} 
-#one:checked ~ .table-title #one-tab,
-#two:checked ~ .table-title #two-tab{
-  background:#fffffff6;
-  color:#000;
-  border-radius: 4px;
-  padding:0 4px 0 4px;
-}
-.user
-{
-    background-color: gainsboro;
-    border-radius: 30px;
-    text-align: center;
-    padding:0 20px;
-    margin:150px 15px 0 0;
-}
+.modal form label {
+    font-weight: normal;
+}	

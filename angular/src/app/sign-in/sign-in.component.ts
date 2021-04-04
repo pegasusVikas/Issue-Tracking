@@ -18,7 +18,7 @@ export class SignInComponent implements OnInit {
     if(!this.validateEmail(email))
     this.showError("Enter a Valid Email");
     else if(password=="")
-    this.showError("password cant be empty");
+    this.showError("Password can't be empty!");
     else{
     //send form to backend
     this.http.post(this.loginURL,{

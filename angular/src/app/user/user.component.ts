@@ -7,38 +7,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  issues=[
-    {
-      issueID:"100" ,
-  issueName: "LAN Driver",
-  createdOn: "31-08-2000",
+  new_issues=[{
+    issueId:"XE65768" ,
+    imageUrl: "",
+    issueName: "LAN driver",
+    issueDesc: "can't connect",
+    createdOn: "3-09-20",
+    createdBy: "",
+    connectedBy: "",
+     status: "Active",
+     developerName:"Mr XYZ"
     },
     {
-      issueID:"101" ,
-  issueName: "Wifi Driver",
-  createdOn: "21-09-2000",
+    issueId:"XE6123" ,
+    imageUrl: "",
+    issueName: "Camera Driver",
+    issueDesc: " connect",
+    createdOn: "4-09-20",
+    createdBy: "",
+    connectedBy: "",
+     status: "Active",
+     developerName:"Mr ABC"
     }
-
   ]
-   
-  solIssues=[
-    {
-      issueID:"100" ,
-  issueName: "LAN Driver",
-  createdOn: "31-08-2000",
-    },
-    {
-      issueID:"101" ,
-  issueName: "Wifi Driver",
-  createdOn: "21-09-2000",
+  selected_issue={
+    issueId:"" ,
+    imageUrl: "",
+    issueName: "",
+    issueDesc: "",
+    createdOn: "",
+    createdBy: "",
+    connectedBy: "",
+     status: ""
+  }    
+    constructor() { }
+  
+    ngOnInit(): void {
+      
     }
-
-  ]
-  constructor() { 
-    
-  }
-
-  ngOnInit(): void {
-  }
-
+  
+    getId(issue:any){
+      this.selected_issue=issue
+      console.log("output to parent" + issue);
+    }
 }
