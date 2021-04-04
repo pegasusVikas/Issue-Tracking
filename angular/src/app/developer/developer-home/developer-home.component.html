@@ -18,10 +18,10 @@
                         <div class="col-sm-12">
                             <ul class="nav nav-pills nav-fill">
                                 <li class="nav-item">
-                                  <a class="nav-link active" data-toggle="tab" routerLink="#table table-striped table-hover" role="tab" aria-controls="home" aria-selected="true"><h2>Active</h2></a>
+                                  <a (click)="setTab('active')"class="nav-link active" data-toggle="tab" routerLink="#table table-striped table-hover" role="tab" aria-controls="home" aria-selected="true"><h2>Active</h2></a>
                                 </li>
                                 <li class="nav-item">
-                                  <a class="nav-link" data-toggle="tab" routerLink="#table table-striped table-hover" role="tab" aria-controls="home" aria-selected="true"><h2>Resolved</h2></a>
+                                  <a (click)="setTab('resolved')"class="nav-link" data-toggle="tab" routerLink="#table table-striped table-hover" role="tab" aria-controls="home" aria-selected="true"><h2>Resolved</h2></a>
                                 </li>
                               </ul>
                         </div>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-8">
-                        <app-developer-table [issues]="active_issues" (outputId)="getId($event)"></app-developer-table>
+                        <app-developer-table [issues]="issues" (outputId)="getId($event)"></app-developer-table>
                     </div>
                     <div class="col-sm-4">
                 <div class="card">
@@ -38,14 +38,14 @@
                         <label><h1>DEVELOPER XYZ</h1></label>
                            
                                 <form>
-                                    <label style="color:#FFC107;"><h2>Total Issues :</h2></label>
-                                    <label style="color:#FFC107;"><h2>42</h2></label> 
+                                    <label style="color:#FFC107;"><h2>Total Issues : </h2></label>
+                                    <label style="color:#FFC107;"><h2>{{stats.totalissues}}</h2></label> 
                                     <br><br>
                                     <label style="color: red;"><h2>Solved Issues : </h2></label>
-                                    <label style="color: red;"><h2>20</h2></label>
+                                    <label style="color: red;"><h2>{{stats.solved}}</h2></label>
                                     <br><br>
-                                    <label style="color: green;"><h2>Active Issues  : </h2></label>
-                                    <label style="color: green;"><h2>22</h2></label>
+                                    <label style="color: green;"><h2>Active Issues : </h2></label>
+                                    <label style="color: green;"><h2>{{stats.active}}</h2></label>
                                     <br><br>
                                 </form>
                     </div>
@@ -65,19 +65,23 @@
                     <div class="modal-body">					
                         <div class="form-group">
                             <label for="exampleFormControlSelect1">Status</label>
-                            <select class="form-control" id="exampleFormControlSelect1">
-                                <option value="1">Active</option>
-                              <option value="2">Resolved</option>
+                            <select  #option class="form-control" id="exampleFormControlSelect1">
+                                <option  value="0" *ngIf="selected_issue.status=='active'">active</option>
+                              <option value="1">resolved</option>
                             </select>
                           </div>
                         <div class="form-group">
                             <label>Issue description</label>
-                            <textarea class="form-control" required></textarea>
+                            <div class="form-control" required>{{selected_issue.issuedesc}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Issue image</label>
+                            <img class="form-group" [src]="selected_issue.imageurl" style="max-height:300px;" width="100%"/>
                         </div>				
                     </div>
-                    <div class="modal-footer">
+                    <div *ngIf="selected_issue.status=='active'" class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <input type="submit" class="btn btn-info"  value="Save">
+                        <input (click)="issueResolve(option.value)" type="submit" class="btn btn-info"  data-dismiss="modal" value="Save">
                     </div>
                 </form>
             </div>

@@ -10,30 +10,10 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class DeveloperHomeComponent implements OnInit {
   url="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io"
-  active_issues:{}[]=[{
-    issueid:"XE65768" ,
-    imageurl: "",
-    issuename: "LAN driver",
-    issuedesc: "can't connect",
-    createdon: "3-09-20",
-    createdby: "",
-    connectedby: "",
-     status: "Active",
-     developername:"Mr XYZ"
-    },
-    {
-    issueid:"XE6123" ,
-    imageurl: "",
-    issuename: "Camera Driver",
-    issuedesc: " connect",
-    createdon: "4-09-20",
-    createdby: "",
-    connectedby: "",
-     status: "Resolved",
-     developername:"Mr ABC"
-    }
-  ]
+  active_issues:{}[]=[]
+  issues:{}[]=this.active_issues
   solved_issues:{}[]=[]
+  stats:any={}
   selected_issue={
     issueid:"" ,
     imageurl: "",
@@ -46,25 +26,30 @@ export class DeveloperHomeComponent implements OnInit {
   }    
     constructor(private http:HttpClient,private cookies:CookieService,private router:Router) { 
       let cookie=this.cookies.get('uid');
+      let role=cookie.split("_")[0];
     if(cookie){
       console.log("cookie detected")
       this.http.get(this.url+"/validateCookie",{withCredentials:true})
       .toPromise().then((res)=>{
         //change here while hosting
-        // if(!(res==true))
-        // {
-        //   console.log("deleting cookie")
-        //    this.cookies.delete('uid')
-        // }else{
-        //   console.log("redirecting")
-        //   this.router.navigate(['/admin/home'])
-        // }
+         if(!(res)||role!="developer")
+         {
+           console.log("deleting cookie")
+            this.cookies.delete('uid')
+             console.log("redirecting")
+           this.router.navigate(['/signin'])
+        }else{
+          this.fetchIssue();
+          this.devStats();
+        }
         
       }).catch((err)=>{console.log(err);window.location.reload();})
     }else{
       this.router.navigate(['/signin']);
     }
-     this.fetchIssue();
+
+    
+
     }
   
     ngOnInit(): void {
@@ -81,12 +66,23 @@ export class DeveloperHomeComponent implements OnInit {
       .toPromise().then((res)=>{
         if(res){
           this.sortIssues(res);
+          this.setTab("active")
         }
         else window.location.reload();//if there is no cookie
 
       }).catch((err)=>{console.log(err);})
     }
+    devStats(){
+      this.http.get(this.url+"/dev/issuedata",{withCredentials:true})
+      .toPromise().then((res)=>{
+        console.log(res)
+        if(res){
+          this.stats=res;
+        }
+        else window.location.reload();//if there is no cookie
 
+      }).catch((err)=>{console.log(err);})
+    }
     sortIssues(issues:any){
       issues.map((issue:any)=>{
         if(issue.status=="active")
@@ -95,6 +91,21 @@ export class DeveloperHomeComponent implements OnInit {
         this.solved_issues.push(issue);
       })
     }
-  
+    
+    setTab(tab:String){
+      if(tab=="active")
+      this.issues=this.active_issues
+      else if(tab=="resolved")
+      this.issues=this.solved_issues
+    }
+
+    issueResolve(issue:String){
+      if(issue=="1"){
+        this.http.put(this.url+"/status/"+this.selected_issue.issueid,{withCredentials:true})
+      .toPromise().then((res)=>{
+        this.fetchIssue();
+      }).catch((err)=>{console.log(err)})
+      }
+    }
 
 }

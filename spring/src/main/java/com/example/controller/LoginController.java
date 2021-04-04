@@ -40,7 +40,7 @@ public class LoginController {
 				//response.addCookie(cookie);
 				ResponseCookie cookie = ResponseCookie.from("uid",user.getRole()+"_"+user.getId())
 						.domain("examlyiopb.examly.io")
-			            .maxAge(60*60)
+			            .maxAge(60*60*24*3)//cookie/session will expire after 3 days
 			            .sameSite("None")
 			            .secure(true)
 						.path("/")
@@ -53,7 +53,7 @@ public class LoginController {
 		return false;
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("user/{id}")
 	public UserModel getUser(@PathVariable String id)
 	{
 		return repo.getUserById(id);

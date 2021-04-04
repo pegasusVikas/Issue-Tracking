@@ -21,6 +21,7 @@ public class test {
 	
 	@GetMapping("/validateCookie")
 	public Boolean validateCookie(@CookieValue(value = "uid", defaultValue = "Null") String uid) {
+		System.out.println(uid);
 		try{
 		String[] ids=uid.split("_");
 		String role=ids[0];

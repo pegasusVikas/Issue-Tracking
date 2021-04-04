@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'user',
@@ -6,41 +9,82 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-
-  new_issues=[{
-    issueId:"XE65768" ,
-    imageUrl: "",
-    issueName: "LAN driver",
-    issueDesc: "can't connect",
-    createdOn: "3-09-20",
-    createdBy: "",
-    connectedBy: "",
+  url="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io"
+  stats:any={}
+  id:any=""
+  user:any={}
+  active_issues=[{
+    issueid:"XE65768" ,
+    imageurl: "",
+    issuename: "LAN driver",
+    issuedesc: "can't connect",
+    createdon: "3-09-20",
+    createdby: "",
+    connectedby: "vikas bro",
      status: "Active",
-     developerName:"Mr XYZ"
     },
     {
-    issueId:"XE6123" ,
-    imageUrl: "",
-    issueName: "Camera Driver",
-    issueDesc: " connect",
-    createdOn: "4-09-20",
-    createdBy: "",
-    connectedBy: "",
+    issueid:"XE6123" ,
+    imageurl: "",
+    issuename: "Camera Driver",
+    issuedesc: " connect",
+    createdon: "4-09-20",
+    createdby: "",
+    connectedby: "vikas sis",
      status: "Active",
-     developerName:"Mr ABC"
     }
   ]
+  solved_issues=[
+    {
+      issueid:"XE6123" ,
+      imageurl: "",
+      issuename: "Camera Driver",
+      issuedesc: " connect",
+      createdon: "4-09-20",
+      createdby: "",
+      connectedby: "vikas sis",
+       status: "Active",
+      }
+
+  ]
+  issues=this.active_issues
   selected_issue={
-    issueId:"" ,
-    imageUrl: "",
-    issueName: "",
-    issueDesc: "",
-    createdOn: "",
-    createdBy: "",
-    connectedBy: "",
+    issueid:"" ,
+    imageurl: "",
+    issuename: "",
+    issuedesc: "",
+    createdon: "",
+    createdby: "",
+    connectedby: "",
      status: ""
   }    
-    constructor() { }
+  constructor(private http:HttpClient,private cookies:CookieService,private router:Router) { 
+    let cookie=this.cookies.get('uid');
+    let role=cookie.split("_")[0];
+  if(cookie){
+    console.log("cookie detected")
+    this.http.get(this.url+"/validateCookie",{withCredentials:true})
+    .toPromise().then((res)=>{
+      //change here while hosting
+       if(!(res)||role!="user")
+       {
+         console.log("deleting cookie")
+          this.cookies.delete('uid')
+           console.log("redirecting")
+         this.router.navigate(['/signin'])
+      }else{
+        console.log("lol")
+        this.id=cookie.split("_")[1];
+        this.fetchIssue();
+        this.userStats();
+        this.fetchUser();
+      }
+      
+    }).catch((err)=>{console.log(err);window.location.reload();})
+  }else{
+    this.router.navigate(['/signin']);
+  }
+  }
   
     ngOnInit(): void {
       
@@ -49,5 +93,58 @@ export class UserComponent implements OnInit {
     getId(issue:any){
       this.selected_issue=issue
       console.log("output to parent" + issue);
+    }
+
+    setTab(tab:String){
+      if(tab=="active"){
+       this.issues=this.active_issues
+      }else if(tab=="resolved"){
+        this.issues=this.solved_issues
+      }
+    }
+
+    sortIssues(issues:any){
+      issues.map((issue:any)=>{
+        if(issue.status=="active")
+        this.active_issues.push(issue)
+        else
+        this.solved_issues.push(issue);
+      })
+    }
+
+    fetchIssue(){
+      this.http.get(this.url+"/issue/"+this.id,{withCredentials:true})
+      .toPromise().then((res)=>{
+        if(res){
+          this.sortIssues(res);
+          this.setTab("active")
+        }
+        else window.location.reload();//if there is no cookie
+
+      }).catch((err)=>{console.log(err);})
+    }
+
+    userStats(){
+      this.http.get(this.url+"/user/issuedata",{withCredentials:true})
+      .toPromise().then((res)=>{
+        console.log(res)
+        if(res){
+          this.stats=res;
+        }
+        else window.location.reload();//if there is no cookie
+
+      }).catch((err)=>{console.log(err);})
+    }
+
+    fetchUser(){
+      this.http.get(this.url+"/user/"+this.id,{withCredentials:true})
+      .toPromise().then((res)=>{
+        console.log(res)
+        if(res){
+          this.user=res;
+        }
+        else window.location.reload();//if there is no cookie
+
+      }).catch((err)=>{console.log(err);})
     }
 }

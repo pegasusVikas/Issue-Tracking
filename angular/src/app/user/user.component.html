@@ -21,10 +21,10 @@
                         <div class="col-sm-12">
                             <ul class="nav nav-pills nav-fill">
                                 <li class="nav-item">
-                                  <a class="nav-link active" data-toggle="tab" routerLink="#table table-striped table-hover" role="tab" aria-controls="home" aria-selected="true"><h2>Active</h2></a>
+                                  <a (click)="setTab('active')" class="nav-link active" data-toggle="tab" routerLink="#table table-striped table-hover" role="tab" aria-controls="home" aria-selected="true"><h2>Active</h2></a>
                                 </li>
                                 <li class="nav-item">
-                                  <a class="nav-link" data-toggle="tab" routerLink="#table table-striped table-hover" role="tab" aria-controls="home" aria-selected="true"><h2>Resolved</h2></a>
+                                  <a (click)="setTab('resolved')" class="nav-link" data-toggle="tab" routerLink="#table table-striped table-hover" role="tab" aria-controls="home" aria-selected="true"><h2>Resolved</h2></a>
                                 </li>
                               </ul>
                         </div>
@@ -33,22 +33,23 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-8">
-                        <app-user-table [issues]="new_issues" (outputId)="getId($event)"></app-user-table>
+                        <app-user-table [issues]="issues" (outputId)="getId($event)"></app-user-table>
                     </div>
                     <div class="col-sm-4">
                 <div class="card">
                     <div class="card-body">
-                        <label><h1>USER NAME</h1></label>
-                           
+                      <h1>User:</h1>
+                        <label><h1>{{user.username}}<h5>{{user.email}}</h5></h1></label>
+                        
                                 <form>
                                     <label style="color:#FFC107;"><h2>Total Issues :</h2></label>
-                                    <label style="color:#FFC107;"><h2>42</h2></label> 
+                                    <label style="color:#FFC107;"><h2>{{stats.totalissues}}</h2></label> 
                                     <br><br>
                                     <label style="color: red;"><h2>Solved Issues : </h2></label>
-                                    <label style="color: red;"><h2>20</h2></label>
+                                    <label style="color: red;"><h2>{{stats.solved}}</h2></label>
                                     <br><br>
                                     <label style="color: green;"><h2>Active Issues  : </h2></label>
-                                    <label style="color: green;"><h2>22</h2></label>
+                                    <label style="color: green;"><h2>{{stats.active}}</h2></label>
                                     <br><br>
                                 </form>
                     </div>
