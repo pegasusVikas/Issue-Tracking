@@ -60,5 +60,13 @@ public interface IssueRepository extends JpaRepository<IssueModel, String>{
 	//get developers whose active issue count is greater than 5
 	@Query(value="select connectedby from issues where connectedby IS NOT NULL and status='active' group by connectedby having count(status)>=5 ",nativeQuery=true)
 	public List<String> unavailableDevelopers();
+
+	//get All the issues that are open
+	@Query(value="select * from issues where status like 'active' ",nativeQuery=true)
+	public List<IssueModel> getOpenIssues();
 	
+	
+	//get All the issues that are closed
+	@Query(value="select * from issues where status like 'solved' ",nativeQuery=true)
+	public List<IssueModel> getClosedIssues();
 }

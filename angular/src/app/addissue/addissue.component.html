@@ -1,10 +1,24 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <a class="navbar-brand"><b>ISSUE TRACKER</b></a>
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="user/home"><b>HOME</b></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="user/addIsuue"><b>ADD ISSUE</b></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="signin"><b>LOGOUT</b></a>
+    </li>
+  </ul>
+</nav>
 <div class="row">
     <div class="col-sm-8">
         <div class="add">
             <div class="table-title">Add Issue</div>
-            <form action="#" class="sign-in-form" (submit)="onSubmit(name.value,desc.value,imageUrl.value);">
+            <form action="#" class="sign-in-form" (submit)="$event.preventDefault();onSubmit(name.value,desc.value,imageUrl.value);">
                 <div class="input-field">
-                  <input #name type="text" placeholder="Name of the Issue" />
+                  <input #name type="text" placeholder="Issue name" />
                 </div>
                 <div class="input-field">
                   <input #desc type="text" placeholder="Description" />
@@ -14,19 +28,23 @@
                   </div>
                   <img id="preview" #preview src="{{source}}" *ngIf="show" height="100px" width="100px">
                 <input type="submit" value="Submit" class="btn solid" />
+                
               </form>
 
         </div>
 
     </div>
     <div class="col-sm-4">
+      
         <div class="user">
+          <h1>User:</h1>
+        <label><h1>{{user.username}}<h5>{{user.email}}</h5></h1></label>
             <br>
-            <div class="total">Total Issues <span class="tot num">35</span></div>
+            <div class="total" style="color:indigo;"><b>Total Issues : </b><span class="tot num"><b>35</b></span></div>
             <br>
-            <div class="active">Active Issues <span class="act num">12</span></div>
+            <div class="active" style="color: red;"><b>Active Issues :</b><span class="act num"><b>12</b></span></div>
             <br>
-            <div class="solved">Solved Issues <span class="sol num">23</span></div>
+            <div class="solved" style="color: green;"><b>Solved Issues :</b><span class="sol num"><b>23</b></span></div>
             <br>
         </div>      
     </div>
