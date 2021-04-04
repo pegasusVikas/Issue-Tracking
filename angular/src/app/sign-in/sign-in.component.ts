@@ -19,16 +19,16 @@ export class SignInComponent implements OnInit {
       this.http.get(this.loginURL+"/validateCookie",{withCredentials:true})
       .toPromise().then((res)=>{
         //change here while hosting
-        // if(!(res==true))
-        // {
-        //   console.log("deleting cookie")
-        //    this.cookies.delete('uid')
-        // }else{
-        //   console.log("redirecting")
-        //   this.router.navigate(['/admin/home'])
-        // }
-        let role=cookie.split("_")[0];
+        if(!(res))
+        {
+          console.log("deleting cookie")
+           this.cookies.delete('uid')
+        }else{
+          console.log("redirecting")
+          let role=cookie.split("_")[0];
         this.router.navigate([`/${role}/home`])
+        }
+        
       })
     }
   }
@@ -37,11 +37,10 @@ export class SignInComponent implements OnInit {
     console.log(this.cookies.get('lol'))
   }
   onSubmit(email:String,password:String){
-    this.cookies.delete('uid')
-    console.log("deleting")
-    if(!this.validateEmail(email))
-    this.showError("Enter a Valid Email");
-    else if(password=="")
+    // if(!this.validateEmail(email))
+    // this.showError("Enter a Valid Email");
+    // else 
+    if(password=="")
     this.showError("password cant be empty");
     else{
     //send form to backend

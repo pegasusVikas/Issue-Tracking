@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-developer-home',
@@ -6,41 +9,48 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./developer-home.component.css']
 })
 export class DeveloperHomeComponent implements OnInit {
-  
-  new_issues=[{
-    issueId:"XE65768" ,
-    imageUrl: "",
-    issueName: "LAN driver",
-    issueDesc: "can't connect",
-    createdOn: "3-09-20",
-    createdBy: "",
-    connectedBy: "",
-     status: "Active",
-     developerName:"Mr XYZ"
-    },
-    {
-    issueId:"XE6123" ,
-    imageUrl: "",
-    issueName: "Camera Driver",
-    issueDesc: " connect",
-    createdOn: "4-09-20",
-    createdBy: "",
-    connectedBy: "",
-     status: "Resolved",
-     developerName:"Mr ABC"
-    }
-  ]
+  url="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io"
+  active_issues:{}[]=[]
+  issues:{}[]=this.active_issues
+  solved_issues:{}[]=[]
+  stats:any={}
   selected_issue={
-    issueId:"" ,
-    imageUrl: "",
-    issueName: "",
-    issueDesc: "",
-    createdOn: "",
-    createdBy: "",
-    connectedBy: "",
+    issueid:"" ,
+    imageurl: "",
+    issuename: "",
+    issuedesc: "",
+    createdon: "",
+    createdby: "",
+    connectedby: "",
      status: ""
   }    
-    constructor() { }
+    constructor(private http:HttpClient,private cookies:CookieService,private router:Router) { 
+      let cookie=this.cookies.get('uid');
+      let role=cookie.split("_")[0];
+    if(cookie){
+      console.log("cookie detected")
+      this.http.get(this.url+"/validateCookie",{withCredentials:true})
+      .toPromise().then((res)=>{
+        //change here while hosting
+         if(!(res)||role!="developer")
+         {
+           console.log("deleting cookie")
+            this.cookies.delete('uid')
+             console.log("redirecting")
+           this.router.navigate(['/signin'])
+        }else{
+          this.fetchIssue();
+          this.devStats();
+        }
+        
+      }).catch((err)=>{console.log(err);window.location.reload();})
+    }else{
+      this.router.navigate(['/signin']);
+    }
+
+    
+
+    }
   
     ngOnInit(): void {
       
@@ -50,6 +60,52 @@ export class DeveloperHomeComponent implements OnInit {
       this.selected_issue=issue
       console.log("output to parent" + issue);
     }
-  
+
+    fetchIssue(){
+      this.http.get(this.url+"/issue/"+this.cookies.get('uid').split('_')[1],{withCredentials:true})
+      .toPromise().then((res)=>{
+        if(res){
+          this.sortIssues(res);
+          this.setTab("active")
+        }
+        else window.location.reload();//if there is no cookie
+
+      }).catch((err)=>{console.log(err);})
+    }
+    devStats(){
+      this.http.get(this.url+"/dev/issuedata",{withCredentials:true})
+      .toPromise().then((res)=>{
+        console.log(res)
+        if(res){
+          this.stats=res;
+        }
+        else window.location.reload();//if there is no cookie
+
+      }).catch((err)=>{console.log(err);})
+    }
+    sortIssues(issues:any){
+      issues.map((issue:any)=>{
+        if(issue.status=="active")
+        this.active_issues.push(issue)
+        else
+        this.solved_issues.push(issue);
+      })
+    }
+    
+    setTab(tab:String){
+      if(tab=="active")
+      this.issues=this.active_issues
+      else if(tab=="resolved")
+      this.issues=this.solved_issues
+    }
+
+    issueResolve(issue:String){
+      if(issue=="1"){
+        this.http.put(this.url+"/status/"+this.selected_issue.issueid,{withCredentials:true})
+      .toPromise().then((res)=>{
+        this.fetchIssue();
+      }).catch((err)=>{console.log(err)})
+      }
+    }
 
 }

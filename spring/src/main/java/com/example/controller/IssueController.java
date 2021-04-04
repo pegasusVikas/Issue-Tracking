@@ -36,8 +36,9 @@ public class IssueController {
 	}
 	
 	@GetMapping("/issue/{id}")
-	public List<IssueModel> getHomeIssue(@CookieValue(value = "uid", defaultValue = "Null") String id)
+	public List<IssueModel> getHomeIssue(@CookieValue(value = "uid", defaultValue = "Null") String id) throws Exception
 	{
+		if(id.equals("Null")) throw new Exception("No cookie found");
 		String[] cookie=id.split("_");
 		id=cookie[1];
 		UserModel curr_user=user_repo.getUserById(id);
@@ -224,8 +225,7 @@ public class IssueController {
 	@GetMapping("/admin/issuedata")
 	public OverAllStatAdmin getOverAllStatAdmin(@CookieValue(value = "uid", defaultValue = "Null") String id)
 	{
-		String[] cookie=id.split("_");
-		id=cookie[1];
+		
 		OverAllStatAdmin dataissues=new OverAllStatAdmin();
 		dataissues.setUsers(user_repo.getUserCount());
 		dataissues.setDevelopers(user_repo.getDevCount());
