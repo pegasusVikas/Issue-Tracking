@@ -25,8 +25,7 @@ import { UserTableComponent } from './user-table/user-table.component';
     UserComponent,
     AddissueComponent,
     NavigationBarComponent,
-    UserTableComponent
-    
+    UserTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +38,7 @@ import { UserTableComponent } from './user-table/user-table.component';
     AdminModule
   ],
   providers: [CookieService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports:[]
 })
 export class AppModule { }

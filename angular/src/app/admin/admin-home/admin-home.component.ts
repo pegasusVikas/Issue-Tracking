@@ -71,15 +71,17 @@ export class AdminHomeComponent implements OnInit {
   setTab(tab:String){
     this.tab=tab;
     if(tab=="new")this.issues=this.new_issues
-    else if(tab="active") this.issues=this.active_issues
-    else if(tab=="solved")this.issues=this.solved_issues
+    else if(tab=="active") this.issues=this.active_issues
+    else if(tab=="resolved")this.issues=this.solved_issues
     else console.log("something is wrong")
+    console.log(this.solved_issues)
   }
   assignDev(developer:String,issue:String){
     console.log(developer,issue);
     this.http.post(this.url+`/admin/mapIssue/${issue}`,{devid:developer}).toPromise().then((res)=>{
       if(res){
         console.log(res)
+        this.fetchIssues();
       }else{
         window.location.reload();
       }
@@ -87,6 +89,9 @@ export class AdminHomeComponent implements OnInit {
 
   }
   fetchIssues(){
+    this.new_issues=[]
+  this.active_issues=[]
+  this.solved_issues=[]
     this.http.get(this.url+"/admin",{observe:'response'}).toPromise().then((response)=>{
       let res=response.body
       if(res){
@@ -108,6 +113,8 @@ export class AdminHomeComponent implements OnInit {
   }
   sortIssues(issues:any){
     console.log(issues)
+    this.active_issues=[]
+    this.solved_issues=[]
     issues.forEach((issue:any)=>{
       if(issue.status=="solved")
       this.solved_issues.push(issue);
@@ -116,5 +123,16 @@ export class AdminHomeComponent implements OnInit {
       else this.active_issues.push(issue);
     })
   }
-
+  logout(){
+    //this.cookies.set('uid',"/",0);
+    this.cookies.delete('uid',"/",".examlyiopb.examly.io");
+    this.http.put(this.url+"/logout",
+    {withCredentials:true})
+    .toPromise().then((res)=>{
+      console.log("redirecting")
+      this.router.navigate(['/signin']);
+    })
+    .catch((err)=>{console.log(err);window.location.reload();})
+    
+  }
 }

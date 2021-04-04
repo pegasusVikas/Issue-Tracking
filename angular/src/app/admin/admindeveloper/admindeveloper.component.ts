@@ -119,5 +119,16 @@ export class AdmindeveloperComponent implements OnInit {
           return false;
           }
       }
-
+      logout(){
+        //this.cookies.set('uid',"/",0);
+        this.cookies.delete('uid',"/",".examlyiopb.examly.io");
+        this.http.put(this.url+"/logout",
+        {withCredentials:true})
+        .toPromise().then((res)=>{
+          console.log("redirecting")
+          this.router.navigate(['/signin']);
+        })
+        .catch((err)=>{console.log(err);window.location.reload();})
+        
+      }
 }

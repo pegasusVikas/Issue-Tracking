@@ -1,10 +1,29 @@
 <header>
   <a class="title" href="#">Issue-Tracker</a>
-  <nav>
-    <ul class="nav_links">
-        <li><i class="flex"><mat-icon class="font">person</mat-icon></i><a href="#">Sign-up</a></li>
-        <li><i class="flex"><mat-icon class="font">login</mat-icon></i><a href="#">Login</a></li>
+  <nav *ngIf="user==''" >
+    <ul  class="nav_links">
+        <li><i class="flex"><mat-icon class="font">person</mat-icon></i><a href="/signup">Sign-up</a></li>
+        <li><i class="flex"><mat-icon class="font">login</mat-icon></i><a href="/signin">Login</a></li>
     </ul>
   </nav>
-
+  <nav *ngIf="user=='admin'">
+    <ul class="nav_links">
+        <li><i class="flex"><mat-icon class="font">home</mat-icon></i><a href="/admin/home">Home</a></li>
+        <li><i class="flex"><mat-icon class="font">person</mat-icon></i><a href="/admin/developer">Developer</a></li>
+        <li><i class="flex"><mat-icon class="font">login</mat-icon></i><p (click)="logout()">LogOut</p></li>
+    </ul>
+  </nav>
+  <nav *ngIf="user=='developer'">
+    <ul class="nav_links">
+        <li><i class="flex"><mat-icon class="font">home</mat-icon></i><a href="/developer/home">Home</a></li>
+        <li><i class="flex"><mat-icon class="font">login</mat-icon></i><span (click)="logout()">LogOut</span></li>
+    </ul>
+  </nav>
+  <nav *ngIf="user=='user'">
+    <ul class="nav_links">
+        <li><i class="flex"><mat-icon class="font">home</mat-icon></i><a href="/user/home">Home</a></li>
+        <li><i class="flex"><mat-icon class="font">bug_report</mat-icon></i><a href="/user/addIssue">Issue</a></li>
+        <li><i class="flex"><mat-icon class="font">login</mat-icon></i><span (click)="logout()">LogOut</span></li>
+    </ul>
+  </nav>
 </header>

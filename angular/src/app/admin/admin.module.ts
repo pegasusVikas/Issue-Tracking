@@ -5,13 +5,14 @@ import { AdminTableComponent } from './admin-table/admin-table.component';
 import { AdmindeveloperComponent } from './admindeveloper/admindeveloper.component';
 import { AdmindevelopertableComponent } from './admindevelopertable/admindevelopertable.component';
 import { MatIconModule } from '@angular/material/icon';
+import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component';
 
 
 @NgModule({
   declarations: [AdminHomeComponent, AdminTableComponent,AdmindeveloperComponent, AdmindevelopertableComponent],
   imports: [
     CommonModule,
-    MatIconModule
+    MatIconModule,
   ],
   exports:[AdminHomeComponent,AdminTableComponent]
 })

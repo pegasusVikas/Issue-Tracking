@@ -50,16 +50,13 @@ export class SignInComponent implements OnInit {
     },{withCredentials:true}).toPromise().then((res)=>{
       if(res)
       {
-        //sucess
+        window.location.reload();
       }
       else{
         this.showError("Invalid Credentials!");
       }
     })
 
-    this.http.get(this.loginURL+"/cookie",{withCredentials:true}).toPromise().then((response)=>{
-      
-      console.log(response)})
   }
     
   }

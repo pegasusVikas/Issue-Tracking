@@ -13,38 +13,9 @@ export class UserComponent implements OnInit {
   stats:any={}
   id:any=""
   user:any={}
-  active_issues=[{
-    issueid:"XE65768" ,
-    imageurl: "",
-    issuename: "LAN driver",
-    issuedesc: "can't connect",
-    createdon: "3-09-20",
-    createdby: "",
-    connectedby: "vikas bro",
-     status: "Active",
-    },
-    {
-    issueid:"XE6123" ,
-    imageurl: "",
-    issuename: "Camera Driver",
-    issuedesc: " connect",
-    createdon: "4-09-20",
-    createdby: "",
-    connectedby: "vikas sis",
-     status: "Active",
-    }
+  active_issues:any=[
   ]
-  solved_issues=[
-    {
-      issueid:"XE6123" ,
-      imageurl: "",
-      issuename: "Camera Driver",
-      issuedesc: " connect",
-      createdon: "4-09-20",
-      createdby: "",
-      connectedby: "vikas sis",
-       status: "Active",
-      }
+  solved_issues:any=[
 
   ]
   issues=this.active_issues

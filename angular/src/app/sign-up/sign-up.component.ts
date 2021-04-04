@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sign-up',
@@ -10,7 +11,7 @@ export class SignUpComponent implements OnInit {
   loginURL="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io/signup";
   errMsg:String=""
   hasErr:Boolean=false
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -38,6 +39,7 @@ export class SignUpComponent implements OnInit {
       if(res=="Successfully registered")
       {
         //sucess
+        this.router.navigate([`/signin`])
         console.log(res);
       }
       else{

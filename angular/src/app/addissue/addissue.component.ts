@@ -49,7 +49,7 @@ export class AddissueComponent implements OnInit {
     {issuename,issueurl,issuedesc},
     {withCredentials:true})
     .toPromise().then((res)=>{
-
+      window.location.reload();
     })
     .catch((err)=>{console.log(err);window.location.reload();})
   }

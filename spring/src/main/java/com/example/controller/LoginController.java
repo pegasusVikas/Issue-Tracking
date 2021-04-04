@@ -119,13 +119,19 @@ public class LoginController {
 	    }
 		
 		@PutMapping(value="/logout")
-		public void Logout(@CookieValue(value = "uid", defaultValue = "Null") String id)
+		public void Logout(@CookieValue(value = "uid", defaultValue = "Null") String id,HttpServletResponse response)
 		{
-			String[] cookie=id.split("_");
-			id=cookie[1];
-			UserModel curr_user=repo.getUserById(id);
-			curr_user.setActive(0);
-			repo.save(curr_user);
+			System.out.println("in logout");
+			ResponseCookie cookies = ResponseCookie.from("lol","123321")
+						.domain("examly.io")
+			            .maxAge(60*60)
+			            .sameSite("None")
+			            .secure(true)
+						.path("/")
+			            .build();
+						System.out.println(cookies.toString());
+			 			response.addHeader(HttpHeaders.SET_COOKIE, cookies.toString());
 			return ;
+		
 		}
 }

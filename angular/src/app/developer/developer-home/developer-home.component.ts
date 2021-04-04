@@ -62,6 +62,8 @@ export class DeveloperHomeComponent implements OnInit {
     }
 
     fetchIssue(){
+      this.active_issues=[]
+      this.solved_issues=[]
       this.http.get(this.url+"/issue/"+this.cookies.get('uid').split('_')[1],{withCredentials:true})
       .toPromise().then((res)=>{
         if(res){
@@ -108,4 +110,17 @@ export class DeveloperHomeComponent implements OnInit {
       }
     }
 
+    logout(){
+      //this.cookies.set('uid',"/",0);
+      this.cookies.delete('uid',"/",".examlyiopb.examly.io");
+      this.http.put(this.url+"/logout",
+      {withCredentials:true})
+      .toPromise().then((res)=>{
+        console.log("redirecting")
+        this.router.navigate(['/signin']);
+      })
+      .catch((err)=>{console.log(err);window.location.reload();})
+      
+    }
+    
 }
