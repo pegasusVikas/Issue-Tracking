@@ -9,8 +9,8 @@
     </thead>
     <tbody *ngFor="let developer of developers;">
         <tr>
-            <td>{{developer.developerId}}</td>
-            <td>{{developer.developerName}}</td>
+            <td>{{developer.id}}</td>
+            <td>{{developer.username}}</td>
             <td>{{developer.role}}</td>
             <td>
                 <a href="#editStatus" class="edit" data-toggle="modal" (click)="onClick(developer)"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>

@@ -70,14 +70,14 @@
         </thead>
         <tbody *ngFor="let issue of issues;">
             <tr>
-                <td>{{issue.issueId}}</td>
-                <td>{{issue.issueName}}</td>
-                <td>{{issue.createdOn}}</td>
-                <td>Not Mapped
-                    <a href="#editStatus" class="edit" data-toggle="modal" (click)="onClick(issue)"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                <td>{{issue.issueid}}</td>
+                <td>{{issue.issuename}}</td>
+                <td>{{issue.createdon}}</td>
+                <td>{{issue.connectedby?issue.connectedby:"Not Mapped"}}
+                    <a *ngIf="tab=='new'"href="#editStatus" class="edit" data-toggle="modal" (click)="onClick(issue)"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                 </td>
                 <td>
-                     New
+                    {{issue.status}}
                  </td>
             </tr>
         </tbody>

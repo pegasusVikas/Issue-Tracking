@@ -26,35 +26,34 @@
                 <div class="row">
                     <div class="col-sm-7">
                         
-                        <app-admindevelopertable [developers]="new_developers" (outputId)="getId($event)"></app-admindevelopertable>
+                        <app-admindevelopertable [developers]="developers" (outputId)="getId($event)" ></app-admindevelopertable>
                     </div>
                     <div class="col-sm-5">
                 <div class="card">
                     <div class="card-body">
-                        <label><h1 style="color:rgb(14, 33, 104);text-align: center;">ADD</h1></label>
-                        <form>
-                           
+                        <label><h1 style="color:rgb(45, 78, 187);text-align: center;">ADD</h1></label>
+                        <form (submit)="$event.preventDefault();addDev(username1.value,email1.value,mobilenumber1.value,password1.value)">
                             <div class="form-group row">
                                 <div class="col-sm-12">
-                                  <input type="name" class="form-control" id="inputEmail3" placeholder="Enter Name">
+                                  <input #username1 type="name" class="form-control" id="inputEmail3" placeholder="Enter Name">
                                 </div>
                               </div>
                               <div class="form-group row">
                                
                                 <div class="col-sm-12">
-                                  <input type="email" class="form-control" id="inputEmail3" placeholder="Enter Email">
+                                  <input #email1 type="email" class="form-control" id="inputEmail3" placeholder="Enter Email">
                                 </div>
                               </div>
                             <div class="form-group row">
                              
                               <div class="col-sm-12">
-                                <input type="username" class="form-control" id="inputEmail3" placeholder="Enter Username">
+                                <input #mobilenumber1 type="text" class="form-control" id="inputEmail3" placeholder="Enter PhoneN0">
                               </div>
                             </div>
                             <div class="form-group row">
                              
                               <div class="col-sm-12">
-                                <input type="password" class="form-control" id="inputPassword3" placeholder="Enter Password">
+                                <input #password1 type="password" class="form-control" id="inputPassword3" placeholder="Enter Password">
                               </div>
                             </div>
                             
@@ -62,8 +61,13 @@
                               <div class="col-sm-12">
                                 <button type="submit" class="btn btn-primary">ADD DEVELOPER</button>
                               </div>
+                              <div *ngIf="err[0].hasErr" style="margin-top: 5px;" class="button alert alert-danger" role="alert">
+                                <div class="flex" style="margin: 5px;">
+                                  <span class="error"><mat-icon class="alert">error_outline</mat-icon> {{err[0].errMsg}}</span>
+                                </div>
+                              </div>
                             </div>
-                          </form>
+                        </form>
                     </div>
                   </div>
                     </div>
@@ -75,33 +79,41 @@
     <div id="editStatus" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form>
+                <form (submit)="$event.preventDefault();editDev(username2.value,email2.value,mobilenumber2.value,password2.value)" >
                     <div class="modal-header">						
-                      <h4 class="modal-title">Developer {{selected_developer.developerName}} ({{selected_developer.developerId}})</h4>
+                      <h4 class="modal-title">Developer {{selected_developer.username}} ({{selected_developer.id}})</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <div class="modal-body">					
+                    
+                    <div class="modal-body">	
+                      				
                         <div class="form-group">
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Name">
+                            <input #username2 type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [value]="selected_developer.username" placeholder="Enter UserName">
                              </div>			
-                   
                     <div class="form-group">
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Email">
+                        <input #email2 type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [value]="selected_developer.email" placeholder="Enter Email">
                          </div>			
                 
                 <div class="form-group">
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Username">
+                    <input #mobilenumber2 type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [value]="selected_developer.mobilenumber" placeholder="Enter PhoneN0">
                      </div>			
            
             <div class="form-group">
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Password">
+                <input #password2 type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" [value]="selected_developer.password" placeholder="Enter Password">
                  </div>			
-        </div>
+               </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                         <input type="submit" class="btn btn-info"  value="Update">
                     </div>
+                    
                 </form>
+                
+            </div>
+            <div *ngIf="err[1].hasErr" class="alert alert-danger" role="alert">
+              <div class="flex" style="margin: 5px;">
+                 <span class="error"><mat-icon class="alert">error_outline</mat-icon>{{err[1].errMsg}}</span>
+              </div>
             </div>
         </div>
     </div>
@@ -111,13 +123,13 @@
             <div class="modal-content">
                 <form>
                   <div class="modal-header">
-                    <h4 class="modal-title"><b>Developer {{selected_developer.developerName}} ({{selected_developer.developerId}})</b></h4>
+                    <h4 class="modal-title"><b>Developer {{selected_developer.username}} ({{selected_developer.id}})</b></h4>
                   </div>
                     <div class="modal-body">
                         <p>Are you sure you want to delete</p>
                       </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Delete</button>
+                        <button (click)="deleteDev()" type="button" class="btn btn-primary" data-dismiss="modal">Delete</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                       </div>
                 </form>

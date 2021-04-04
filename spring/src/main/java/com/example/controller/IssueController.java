@@ -110,7 +110,7 @@ public class IssueController {
 		
 		String s=issue_repo.genId();
 		if(s==null)
-			data.setIssueid("#10000000000");
+			data.setIssueid("10000000000");
 		else
 			data.setIssueid(idGen(s,1));
 		
@@ -155,7 +155,7 @@ public class IssueController {
 	@PutMapping(value="/status/{id}")
 	public void updateStatus(@PathVariable String id)
 	{
-		String issueid="#"+id;
+		String issueid=id;
 		IssueModel issue=issue_repo.getIssueById(issueid);
 		issue.setStatus("solved");
 		issue_repo.save(issue);
@@ -163,7 +163,7 @@ public class IssueController {
 	}
 	
 	//Display Available Developers to admin in order to map an Issue
-	@GetMapping(value="/availabledevs")
+	@GetMapping(value="/availableDevs")
 	public List<UserModel> displayDev()
 	{
 		List<UserModel> devs=user_repo.getDevelopers();
@@ -181,7 +181,7 @@ public class IssueController {
 	@PostMapping(value="/admin/mapIssue/{id}")
 	public boolean assignIssue(@PathVariable String id,@RequestBody AssignmentModel data)
 	{
-		data.setIssueid("#"+id);
+		data.setIssueid(id);
 		IssueModel issue=issue_repo.getIssueById(data.getIssueid());
 		if((issue!=null) && (issue_repo.countActiveIssuesAssigned(data.getDevid())<5))
 		{

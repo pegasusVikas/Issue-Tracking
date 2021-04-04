@@ -1,3 +1,4 @@
+import {CookieService} from 'ngx-cookie-service';
 import { AddissueComponent } from './addissue/addissue.component';
 import { AdminModule } from './admin/admin.module';
 import { NgModule } from '@angular/core';
@@ -37,7 +38,7 @@ import { UserTableComponent } from './user-table/user-table.component';
     DeveloperModule,
     AdminModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
