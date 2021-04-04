@@ -6,7 +6,8 @@ import { Component, Input,Output, OnInit, EventEmitter } from '@angular/core';
 })
 export class AdmindevelopertableComponent implements OnInit {
   @Input("developers") developers:any;
-  @Output() outputId =new EventEmitter<String>();
+  @Output("outputId") outputId =new EventEmitter<String>();
+ 
  
   constructor() { }
 
@@ -16,4 +17,5 @@ export class AdmindevelopertableComponent implements OnInit {
     console.log(developer);
     this.outputId.emit(developer);
   }
+
 }

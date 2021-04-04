@@ -30,7 +30,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-8">
-                        <app-developer-table [issues]="new_issues" (outputId)="getId($event)"></app-developer-table>
+                        <app-developer-table [issues]="active_issues" (outputId)="getId($event)"></app-developer-table>
                     </div>
                     <div class="col-sm-4">
                 <div class="card">
@@ -59,7 +59,7 @@
             <div class="modal-content">
                 <form>
                     <div class="modal-header">						
-                        <h4 class="modal-title">Issue {{selected_issue.issueName}} ({{selected_issue.issueId}})</h4>
+                        <h4 class="modal-title">Issue {{selected_issue.issuename}} ({{selected_issue.issueid}})</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">					

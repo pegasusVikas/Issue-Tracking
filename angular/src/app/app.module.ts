@@ -1,3 +1,4 @@
+import {CookieService} from 'ngx-cookie-service';
 import { AddissueComponent } from './addissue/addissue.component';
 import { TablesolComponent } from './tablesol/tablesol.component';
 import { TableactComponent } from './tableact/tableact.component';
@@ -43,7 +44,7 @@ import { AdmindeveloperComponent } from './admin/admindeveloper/admindeveloper.c
     DeveloperModule,
     AdminModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-developer-home',
@@ -6,41 +9,63 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./developer-home.component.css']
 })
 export class DeveloperHomeComponent implements OnInit {
-  
-  new_issues=[{
-    issueId:"XE65768" ,
-    imageUrl: "",
-    issueName: "LAN driver",
-    issueDesc: "can't connect",
-    createdOn: "3-09-20",
-    createdBy: "",
-    connectedBy: "",
+  url="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io"
+  active_issues:{}[]=[{
+    issueid:"XE65768" ,
+    imageurl: "",
+    issuename: "LAN driver",
+    issuedesc: "can't connect",
+    createdon: "3-09-20",
+    createdby: "",
+    connectedby: "",
      status: "Active",
-     developerName:"Mr XYZ"
+     developername:"Mr XYZ"
     },
     {
-    issueId:"XE6123" ,
-    imageUrl: "",
-    issueName: "Camera Driver",
-    issueDesc: " connect",
-    createdOn: "4-09-20",
-    createdBy: "",
-    connectedBy: "",
+    issueid:"XE6123" ,
+    imageurl: "",
+    issuename: "Camera Driver",
+    issuedesc: " connect",
+    createdon: "4-09-20",
+    createdby: "",
+    connectedby: "",
      status: "Resolved",
-     developerName:"Mr ABC"
+     developername:"Mr ABC"
     }
   ]
+  solved_issues:{}[]=[]
   selected_issue={
-    issueId:"" ,
-    imageUrl: "",
-    issueName: "",
-    issueDesc: "",
-    createdOn: "",
-    createdBy: "",
-    connectedBy: "",
+    issueid:"" ,
+    imageurl: "",
+    issuename: "",
+    issuedesc: "",
+    createdon: "",
+    createdby: "",
+    connectedby: "",
      status: ""
   }    
-    constructor() { }
+    constructor(private http:HttpClient,private cookies:CookieService,private router:Router) { 
+      let cookie=this.cookies.get('uid');
+    if(cookie){
+      console.log("cookie detected")
+      this.http.get(this.url+"/validateCookie",{withCredentials:true})
+      .toPromise().then((res)=>{
+        //change here while hosting
+        // if(!(res==true))
+        // {
+        //   console.log("deleting cookie")
+        //    this.cookies.delete('uid')
+        // }else{
+        //   console.log("redirecting")
+        //   this.router.navigate(['/admin/home'])
+        // }
+        
+      }).catch((err)=>{console.log(err);window.location.reload();})
+    }else{
+      this.router.navigate(['/signin']);
+    }
+     this.fetchIssue();
+    }
   
     ngOnInit(): void {
       
@@ -49,6 +74,26 @@ export class DeveloperHomeComponent implements OnInit {
     getId(issue:any){
       this.selected_issue=issue
       console.log("output to parent" + issue);
+    }
+
+    fetchIssue(){
+      this.http.get(this.url+"/issue/"+this.cookies.get('uid').split('_')[1],{withCredentials:true})
+      .toPromise().then((res)=>{
+        if(res){
+          this.sortIssues(res);
+        }
+        else window.location.reload();//if there is no cookie
+
+      }).catch((err)=>{console.log(err);})
+    }
+
+    sortIssues(issues:any){
+      issues.map((issue:any)=>{
+        if(issue.status=="active")
+        this.active_issues.push(issue)
+        else
+        this.solved_issues.push(issue);
+      })
     }
   
 
