@@ -36,10 +36,8 @@ public class IssueController {
 	}
 	
 	@GetMapping("/issue/{id}")
-	public List<IssueModel> getHomeIssue(@CookieValue(value = "uid", defaultValue = "Null") String id)
+	public List<IssueModel> getHomeIssue(@PathVariable String id)
 	{
-		String[] cookie=id.split("_");
-		id=cookie[1];
 		UserModel curr_user=user_repo.getUserById(id);
 		if(curr_user.getRole().equals("user"))
 		{
@@ -224,8 +222,6 @@ public class IssueController {
 	@GetMapping("/admin/issuedata")
 	public OverAllStatAdmin getOverAllStatAdmin(@CookieValue(value = "uid", defaultValue = "Null") String id)
 	{
-		String[] cookie=id.split("_");
-		id=cookie[1];
 		OverAllStatAdmin dataissues=new OverAllStatAdmin();
 		dataissues.setUsers(user_repo.getUserCount());
 		dataissues.setDevelopers(user_repo.getDevCount());
@@ -236,6 +232,17 @@ public class IssueController {
 		
 	}
 	
+	@GetMapping("/admin/openStatus")
+	public List<IssueModel> getOpenStatus()
+	{
+		return issue_repo.getOpenIssues();
+	}
+	
+	@GetMapping("/admin/closedStatus")
+	public List<IssueModel> getClosedStatus()
+	{
+		return issue_repo.getClosedIssues();
+	}
 	
 	
 }
