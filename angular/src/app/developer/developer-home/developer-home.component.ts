@@ -13,6 +13,8 @@ export class DeveloperHomeComponent implements OnInit {
   url=environment.url
   active_issues:{}[]=[]
   issues:{}[]=this.active_issues
+  id:any=""
+  user:any={}
   solved_issues:{}[]=[]
   stats:any={}
   selected_issue={
@@ -26,31 +28,11 @@ export class DeveloperHomeComponent implements OnInit {
      status: ""
   }    
     constructor(private http:HttpClient,private cookies:CookieService,private router:Router) { 
-      let cookie=this.cookies.get('uid');
-      let role=cookie.split("_")[0];
-    if(cookie){
-      console.log("cookie detected")
-      this.http.get(this.url+"/validateCookie",{withCredentials:true})
-      .toPromise().then((res)=>{
-        //change here while hosting
-         if(!(res)||role!="developer")
-         {
-           console.log("deleting cookie")
-            this.cookies.delete('uid')
-             console.log("redirecting")
-           this.router.navigate(['/signin'])
-        }else{
+          let cookie=this.cookies.get('uid');
+          this.id=cookie.split("_")[1];
           this.fetchIssue();
           this.devStats();
-        }
-        
-      }).catch((err)=>{console.log(err);window.location.reload();})
-    }else{
-      this.router.navigate(['/signin']);
-    }
-
-    
-
+          this.fetchUser();
     }
   
     ngOnInit(): void {
@@ -109,6 +91,18 @@ export class DeveloperHomeComponent implements OnInit {
         this.fetchIssue();
       }).catch((err)=>{console.log(err)})
       }
+    }
+
+    fetchUser(){
+      this.http.get(this.url+"/user/"+this.id,{withCredentials:true})
+      .toPromise().then((res)=>{
+        console.log(res)
+        if(res){
+          this.user=res;
+        }
+        else window.location.reload();//if there is no cookie
+  
+      }).catch((err)=>{console.log(err);})
     }
 
     logout(){

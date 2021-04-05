@@ -14,31 +14,13 @@ export class AddissueComponent implements OnInit {
   source:String="";
   show:Boolean=false;
   id:any=""
+  stats:any={}
   user:any={}
   constructor(private http:HttpClient,private cookies:CookieService,private router:Router) { 
     let cookie=this.cookies.get('uid');
-    let role=cookie.split("_")[0];
-  if(cookie){
-    console.log("cookie detected")
-    this.http.get(this.url+"/validateCookie",{withCredentials:true})
-    .toPromise().then((res)=>{
-      //change here while hosting
-       if(!(res)||role!="user")
-       {
-         console.log("deleting cookie")
-          this.cookies.delete('uid')
-          console.log("redirecting")
-         this.router.navigate(['/signin'])
-      }else{
-        console.log("valid cookie")
-        this.id=cookie.split("_")[1];
-        this.fetchUser()
-      }
-      
-    }).catch((err)=>{console.log(err);window.location.reload();})
-  }else{
-    this.router.navigate(['/signin']);
-  }
+    this.id=cookie.split("_")[1];
+    this.fetchUser()
+    this.userStats();
   }
 
   ngOnInit(): void {
@@ -68,6 +50,17 @@ export class AddissueComponent implements OnInit {
       console.log(res)
       if(res){
         this.user=res;
+      }
+      else window.location.reload();//if there is no cookie
+
+    }).catch((err)=>{console.log(err);})
+  }
+  userStats(){
+    this.http.get(this.url+"/user/issuedata",{withCredentials:true})
+    .toPromise().then((res)=>{
+      console.log(res)
+      if(res){
+        this.stats=res;
       }
       else window.location.reload();//if there is no cookie
 

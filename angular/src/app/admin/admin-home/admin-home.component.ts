@@ -32,27 +32,6 @@ export class AdminHomeComponent implements OnInit {
   
   
   constructor(private http:HttpClient,private cookies:CookieService,private router:Router) {
-    let cookie=this.cookies.get('uid');
-    let role=cookie.split("_")[0];
-    if(cookie){
-      console.log("cookie detected")
-      this.http.get(this.url+"/validateCookie",{withCredentials:true})
-      .toPromise().then((res:any)=>{
-        //change here while hosting
-        console.log("cookie is "+res);
-        if(!(res)||role!="admin")
-        {
-          console.log("deleting cookie")
-           this.cookies.delete('uid')
-           console.log("redirecting")
-          this.router.navigate(['/signin'])
-        }
-        
-      }).catch((err:any)=>{console.log(err);window.location.reload();})
-    }else{
-      this.router.navigate(['/signin']);
-    }
-
     this.http.get(this.url+"/admin/issuedata",{withCredentials:true})
       .toPromise().then((res:any)=>{console.log(res);this.admin_stats=res})
       .catch((err:any)=>{console.log(err);window.location.reload();})

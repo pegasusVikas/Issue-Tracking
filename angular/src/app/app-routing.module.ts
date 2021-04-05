@@ -10,15 +10,20 @@ import {SignUpComponent} from './sign-up/sign-up.component';
 import {SignInComponent} from './sign-in/sign-in.component';
 import {DeveloperHomeComponent} from './developer/developer-home/developer-home.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { AdminAuthGuard } from './authGuard/admin.auth.guard';
+import { UserAuthGuard } from './authGuard/user.auth.guard';
+import { DeveloperAuthGuard } from './authGuard/developer.auth.guard';
+import { AuthenticateGuard } from './authGuard/authenticate.guard';
 
 const routes: Routes =[
-  {path:"signin",component:SignInComponent},
-  {path:"signup",component:SignUpComponent},
-  {path:"developer/home",component:DeveloperHomeComponent},
-  {path:"admin/home",component:AdminHomeComponent},
-  {path:"admin/developer",component:AdmindeveloperComponent},
-  {path:"user/home",component:UserComponent},
-  {path:"user/addIssue",component:AddissueComponent}
+  {path:"",redirectTo:"signin",pathMatch:"full"},
+  {path:"signin",canActivate:[AuthenticateGuard],component:SignInComponent},
+  {path:"signup", canActivate:[AuthenticateGuard],component:SignUpComponent},
+  {path:"developer/home", canActivate:[DeveloperAuthGuard] ,component:DeveloperHomeComponent},
+  {path:"admin/home",canActivate:[AdminAuthGuard],component:AdminHomeComponent},
+  {path:"admin/developer",canActivate:[AdminAuthGuard],component:AdmindeveloperComponent},
+  {path:"user/home", canActivate:[UserAuthGuard],component:UserComponent},
+  {path:"user/addIssue", canActivate:[UserAuthGuard], component:AddissueComponent}
 ];
 
 @NgModule({

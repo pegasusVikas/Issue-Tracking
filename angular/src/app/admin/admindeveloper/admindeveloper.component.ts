@@ -23,26 +23,6 @@ export class AdmindeveloperComponent implements OnInit {
     active:""
   }    
     constructor(private http:HttpClient,private cookies:CookieService,private router:Router) { 
-    let cookie=this.cookies.get('uid');
-    let role=cookie.split("_")[0];
-    if(cookie){
-      console.log("cookie detected")
-      this.http.get(this.url+"/validateCookie",{withCredentials:true})
-      .toPromise().then((res)=>{
-        //change here while hosting
-        if(!(res)||role!="admin")
-        {
-          console.log("deleting cookie")
-           this.cookies.delete('uid')
-          console.log("redirecting")
-          this.router.navigate(['/signin'])
-        }
-        
-      }).catch((err)=>{console.log(err);window.location.reload();})
-    }else{
-      this.router.navigate(['/signin']);
-    }
-
     this.fetchDevelopers();
     }
   
