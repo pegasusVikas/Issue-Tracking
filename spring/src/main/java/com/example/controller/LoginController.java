@@ -86,7 +86,7 @@ public class LoginController {
 				//response.addCookie(cookie);
 				ResponseCookie cookie = ResponseCookie.from("uid",curr_user.getRole()+"_"+curr_user.getId())
 						.domain("examlyiopb.examly.io")
-			            .maxAge(60*60)
+			            .maxAge(60*60*24*3)//cookie/session will expire after 3 days
 			            .sameSite("None")
 			            .secure(true)
 						.path("/")
