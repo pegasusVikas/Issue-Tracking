@@ -47,6 +47,7 @@ form {
   }
   .input-field input {
     background: none;
+    width:670%;
     outline: none;
     border: none;
     line-height: 1;

@@ -45,6 +45,7 @@ export class AddissueComponent implements OnInit {
   }
   onSubmit(issuename:String,issuedesc:String,issueurl:String)
   {
+    this.image(issueurl);
     console.log(issuename+" "+issuedesc+" "+issueurl);
     this.http.post(this.url+"/addIssue",
     {issuename,issueurl,issuedesc},

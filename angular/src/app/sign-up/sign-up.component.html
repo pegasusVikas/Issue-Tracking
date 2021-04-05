@@ -1,4 +1,3 @@
-
 <div scroll="no">
   <div>
     <div class="circle"></div>
@@ -11,6 +10,7 @@
         <form #form action="#"
           (submit)="onSubmit(email.value,username.value,phone.value,password1.value,password2.value);"
           id="sign-up">
+          <br><br><br><br><br>
           <h2 class="title">Sign up</h2>
           <div class="input-field">
             <i class="flex">
@@ -42,8 +42,8 @@
             </i>
             <input #password2 type="password" placeholder="Confirm Password" />
           </div>
-          <input type="submit" value="Login" class="btn solid" />
-          Have an account? <a href="/signin">sign in</a>
+          <input type="submit" value="Register" class="btn solid" />
+          Have an account? <a href="/signin">SignIn</a>
         </form>
         <div *ngIf="hasErr" class="alert alert-danger" role="alert">
           <div class="flex" style="margin: 5px;">

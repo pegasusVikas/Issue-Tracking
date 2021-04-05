@@ -11,7 +11,7 @@
                   <input #desc type="text" placeholder="Description" />
                 </div>
                 <div class="input-field">
-                    <input #imageUrl  type="text" placeholder="Image url"  (change)="image(imageUrl.value);"/>
+                    <input #imageUrl  type="text" placeholder="Image url" />
                   </div>
                   <img id="preview" #preview src="{{source}}" *ngIf="show" height="100px" width="100px">
                 <input type="submit" value="Submit" class="btn solid" />
@@ -24,8 +24,7 @@
     <div class="col-sm-4">
       
         <div class="user">
-          <h1>User:</h1>
-        <label><h1>{{user.username}}<h5>{{user.email}}</h5></h1></label>
+        <label><h1>User : {{user.username}}</h1><h4>{{user.email}}</h4></label>
             <br>
             <div class="total" style="color:indigo;"><b>Total Issues : </b><span class="tot num"><b>35</b></span></div>
             <br>
