@@ -32,30 +32,10 @@ export class UserComponent implements OnInit {
   }    
   constructor(private http:HttpClient,private cookies:CookieService,private router:Router) { 
     let cookie=this.cookies.get('uid');
-    let role=cookie.split("_")[0];
-  if(cookie){
-    console.log("cookie detected")
-    this.http.get(this.url+"/validateCookie",{withCredentials:true})
-    .toPromise().then((res)=>{
-      //change here while hosting
-       if(!(res)||role!="user")
-       {
-         console.log("deleting cookie")
-          this.cookies.delete('uid')
-           console.log("redirecting")
-         this.router.navigate(['/signin'])
-      }else{
-        console.log("lol")
         this.id=cookie.split("_")[1];
         this.fetchIssue();
         this.userStats();
         this.fetchUser();
-      }
-      
-    }).catch((err)=>{console.log(err);window.location.reload();})
-  }else{
-    this.router.navigate(['/signin']);
-  }
   }
   
     ngOnInit(): void {

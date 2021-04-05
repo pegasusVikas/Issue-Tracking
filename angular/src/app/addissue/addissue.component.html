@@ -27,11 +27,11 @@
           <h1>User:</h1>
         <label><h1>{{user.username}}<h5>{{user.email}}</h5></h1></label>
             <br>
-            <div class="total" style="color:indigo;"><b>Total Issues : </b><span class="tot num"><b>35</b></span></div>
+            <div class="total" style="color:indigo;"><b>Total Issues : </b><span class="tot num"><b>{{stats.totalissues}}</b></span></div>
             <br>
-            <div class="active" style="color: red;"><b>Active Issues :</b><span class="act num"><b>12</b></span></div>
+            <div class="active" style="color: red;"><b>Active Issues :</b><span class="act num"><b>{{stats.active}}</b></span></div>
             <br>
-            <div class="solved" style="color: green;"><b>Solved Issues :</b><span class="sol num"><b>23</b></span></div>
+            <div class="solved" style="color: green;"><b>Solved Issues :</b><span class="sol num"><b>{{stats.solved}}</b></span></div>
             <br>
         </div>      
     </div>

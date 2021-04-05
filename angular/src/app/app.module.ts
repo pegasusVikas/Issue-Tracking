@@ -15,6 +15,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { UserComponent } from './user/user.component';
 import { UserTableComponent } from './user-table/user-table.component';
+import { AdminAuthGuard } from './authGuard/admin.auth.guard';
+import { UserAuthGuard } from './authGuard/user.auth.guard';
+import { DeveloperAuthGuard } from './authGuard/developer.auth.guard';
+import { AuthenticateGuard } from './authGuard/authenticate.guard';
 
 
 @NgModule({
@@ -37,7 +41,7 @@ import { UserTableComponent } from './user-table/user-table.component';
     DeveloperModule,
     AdminModule
   ],
-  providers: [CookieService],
+  providers: [CookieService,AdminAuthGuard,UserAuthGuard,DeveloperAuthGuard,AuthenticateGuard],
   bootstrap: [AppComponent],
   exports:[]
 })
