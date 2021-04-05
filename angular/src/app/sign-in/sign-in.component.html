@@ -17,10 +17,12 @@
                <i class="flex"><mat-icon class="font">lock</mat-icon></i>
              <input #password type="password" placeholder="Password" />
            </div>
-          
            <input type="submit" value="Login" class="btn solid" />
            Dont't have an account? <a href="/signup">signup</a>
          </form>
+         <div style="text-align: center;">
+          <label>Don't have an account?<a href="signup">Create an account</a></label>
+           </div>
          <div *ngIf="hasErr" class="alert alert-danger" role="alert">
           <div class="flex" style="margin: 5px;">
             <mat-icon class="alert">error_outline</mat-icon><span class="error">{{errMsg}}</span>
