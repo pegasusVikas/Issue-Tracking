@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import {environment} from '../../environments/environment.prod'
 
 @Component({
   selector: 'user',
@@ -9,7 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  url="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io"
+  url=environment.url
   stats:any={}
   id:any=""
   user:any={}

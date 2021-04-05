@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import {environment} from '../../environments/environment.prod'
 
 @Component({
   selector: 'navigation-bar',
@@ -11,7 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class NavigationBarComponent implements OnInit {
 
  @Input("user") user:any=""
- url="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io"
+ url=environment.url
   constructor(private http:HttpClient,private cookies:CookieService,private router:Router) { }
 
   ngOnInit(): void {

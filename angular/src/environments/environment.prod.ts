@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  url:"https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io"
 };

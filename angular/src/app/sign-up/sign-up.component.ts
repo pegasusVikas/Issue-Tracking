@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import {environment} from '../../environments/environment.prod'
 
 @Component({
   selector: 'sign-up',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  loginURL="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io/signup";
+  loginURL=environment.url+"/signup";
   errMsg:String=""
   hasErr:Boolean=false
   constructor(private http:HttpClient,private router:Router) { }

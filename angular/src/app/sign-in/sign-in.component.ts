@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import {Router} from "@angular/router"
+import {environment} from '../../environments/environment.prod'
 
 @Component({
   selector: 'sign-in',
@@ -9,7 +10,7 @@ import {Router} from "@angular/router"
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-  loginURL="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io";
+  loginURL=environment.url;
   errMsg:String=""
   hasErr:Boolean=false
   constructor(private http:HttpClient,private cookies:CookieService,private router:Router) { 

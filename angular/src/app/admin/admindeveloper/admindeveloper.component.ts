@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import {environment} from '../../../environments/environment.prod'
 
 @Component({
   selector: 'app-admindeveloper',
@@ -9,7 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./admindeveloper.component.css']
 })
 export class AdmindeveloperComponent implements OnInit {
-  url="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io"
+  url=environment.url
   developers:any=[]
   err:any=[{hasErr:false,errMsg:""},{hasErr:false,errMsg:""}]
   selected_developer={

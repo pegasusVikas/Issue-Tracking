@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {environment} from './../environments/environment.prod';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -6,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Issue Tracker';
+  url=environment.url;
 }

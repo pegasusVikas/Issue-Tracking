@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import {environment} from '../../../environments/environment.prod'
 
 @Component({
   selector: 'app-developer-home',
@@ -9,7 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./developer-home.component.css']
 })
 export class DeveloperHomeComponent implements OnInit {
-  url="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io"
+  url=environment.url
   active_issues:{}[]=[]
   issues:{}[]=this.active_issues
   solved_issues:{}[]=[]

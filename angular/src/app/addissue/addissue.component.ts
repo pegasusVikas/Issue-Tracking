@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import {environment} from '../../environments/environment.prod'
 
 @Component({
   selector: 'addissue',
@@ -9,7 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./addissue.component.css']
 })
 export class AddissueComponent implements OnInit {
-  url="https://8080-bafdabebdefeddaffcbacabafcefcfcbc.examlyiopb.examly.io"
+  url=environment.url
   source:String="";
   show:Boolean=false;
   id:any=""
